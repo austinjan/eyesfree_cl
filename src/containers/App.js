@@ -1,23 +1,34 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { Layout } from "antd";
-import "./App.css";
+import React, { Component } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { Layout } from 'antd';
+import { rootReducer } from '../reducers';
+import Sidebar from '../components/sidebar/Sidebar';
+import ContentArea from '../components/layouts/ContentArea';
+import './App.css';
 
 const { Header, Footer, Sider, Content } = Layout;
-
+const store = createStore(rootReducer);
 class App extends Component {
   render() {
     return (
-      <Router className="App">
-        <Layout>
-          <Header>Header</Header>
+      <Provider store={store}>
+        <Router className="App">
           <Layout>
-            <Sider className="side">徹邊欄</Sider>
-            <Content>Content</Content>
+            <Header>Header</Header>
+            <Layout>
+              <Sider className="side">
+                <Sidebar />
+              </Sider>
+              <Content>
+                <ContentArea />
+              </Content>
+            </Layout>
+            <Footer>Footer</Footer>
           </Layout>
-          <Footer>Footer</Footer>
-        </Layout>
-      </Router>
+        </Router>
+      </Provider>
     );
   }
 }
