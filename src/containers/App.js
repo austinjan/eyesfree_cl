@@ -1,14 +1,23 @@
 import React, { Component } from "react";
-import { Button } from "antd";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Layout } from "antd";
 import "./App.css";
+
+const { Header, Footer, Sider, Content } = Layout;
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h2> hello app</h2>
-        <Button type="primary">Button</Button>
-      </div>
+      <Router className="App">
+        <Layout>
+          <Header>Header</Header>
+          <Layout>
+            <Sider className="side">徹邊欄</Sider>
+            <Content>Content</Content>
+          </Layout>
+          <Footer>Footer</Footer>
+        </Layout>
+      </Router>
     );
   }
 }
