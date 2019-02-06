@@ -2,8 +2,8 @@ import React from 'react';
 
 import { makeRootRoutes } from '../../routers';
 
-const content = () => {
+const contentArea = () => {
   return <div>{makeRootRoutes}</div>;
 };
 
-export default content;
+export default contentArea;
