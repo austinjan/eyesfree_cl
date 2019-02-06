@@ -32,35 +32,6 @@ const tailFormItemLayout = {
   },
 };
 
-const makeField = Component => ({
-  input,
-  meta,
-  children,
-  hasFeedback,
-  label,
-  ...rest
-}) => {
-  const hasError = meta.touched && meta.invalid;
-  return (
-    <FormItem
-      {...formItemLayout}
-      label={label}
-      validateStatus={hasError ? 'error' : 'success'}
-      hasFeedback={hasFeedback && hasError}
-      help={hasError && meta.error}
-    >
-      <Component {...input} {...rest} children={children} />
-    </FormItem>
-  );
-};
-
-const AInput = makeField(Input);
-const ARadioGroup = makeField(RadioGroup);
-const ASelect = makeField(Select);
-const ACheckbox = makeField(Checkbox);
-const ATextarea = makeField(TextArea);
-const ARangePicker = makeField(RangePicker);
-
 const login = props => {
   const { handleSubmit, pristine, reset, submitting } = props;
   return (

@@ -4,6 +4,20 @@ import { connect } from 'react-redux';
 import Login from '../components/forms/Login';
 import Test from '../components/Test';
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    active: ownProps.filter === state.visibilityFilter,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onClick: () => {
+      dispatch(setVisibilityFilter(ownProps.filter));
+    },
+  };
+};
+
 export const rootRoutes = [
   {
     path: '/login',
