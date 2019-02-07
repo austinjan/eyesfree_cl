@@ -1,24 +1,27 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Login from '../components/forms/Login';
 import Test from '../components/Test';
+import { deviceSettingsRoutes } from './SettingsRouter';
+export { deviceSettingsRoutes } from './SettingsRouter';
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    active: ownProps.filter === state.visibilityFilter,
-  };
+  // return {
+  //   active: ownProps.filter === state.visibilityFilter,
+  // };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onClick: () => {
-      dispatch(setVisibilityFilter(ownProps.filter));
-    },
-  };
+  // return {
+  //   onClick: () => {
+  //     dispatch(setVisibilityFilter(ownProps.filter));
+  //   },
+  // };
 };
 
-export const rootRoutes = [
+const makeRoute = () => {};
+
+const rootRoutes = [
   {
     path: '/login',
     component: Login,
@@ -29,16 +32,21 @@ export const rootRoutes = [
   },
 ];
 
+export const makeRootRoutes = rootRoutes.map((routeItem, index) => (
+  <Route key={index} path={routeItem.path} component={routeItem.component} />
+));
+
 const fakeAuth = ({ user }) => {
   return user.authenticated;
 };
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, key, ...rest }) => {
   return (
     <Route
       {...rest}
+      key={key}
       render={props =>
-        fakeAuth.isAuthenticated ? (
+        fakeAuth({ user: { authenticated: true } }) ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -53,6 +61,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export const makeRootRoutes = rootRoutes.map((routeItem, index) => (
-  <Route key={index} path={routeItem.path} component={routeItem.component} />
+export const makeSettingsRouters = deviceSettingsRoutes.map(item => (
+  <PrivateRoute
+    path={item.to}
+    component={item.component}
+    to={item.to}
+    key={item.key}
+  />
 ));

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Form, Input, Radio, Select, Checkbox, Button, DatePicker } from 'antd';
-
+import { AInput, ARadioGroup, ARangePicker } from './ReduxFormComponents';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const { Option } = Select;

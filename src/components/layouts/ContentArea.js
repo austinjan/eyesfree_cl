@@ -1,9 +1,14 @@
 import React from 'react';
 
-import { makeRootRoutes } from '../../routers';
+import { makeRootRoutes, makeSettingsRouters } from '../../routers';
 
 const contentArea = () => {
-  return <div>{makeRootRoutes}</div>;
+  return (
+    <div>
+      {makeRootRoutes}
+      {makeSettingsRouters}
+    </div>
+  );
 };
 
 export default contentArea;

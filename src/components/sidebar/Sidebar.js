@@ -1,8 +1,44 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
+import { deviceSettingsRoutes } from '../../routers';
+import './Sidebar.css';
 
-const { SubMenu } = Menu;
+const SubMenu = Menu.SubMenu;
+
+const defaultOpenKey = menu => {
+  if (menu[0]) {
+    return menu[0].key.toString();
+  }
+  return '0';
+};
+
+const createSubMenu = submenu => (
+  <SubMenu
+    key={submenu.key}
+    title={
+      <span>
+        <Icon type={submenu.icon} />
+        {submenu.name}
+      </span>
+    }
+  >
+    {submenu.items.map(submenuItem => (
+      <Menu.Item key={submenuItem.key}>
+        <Link to={submenuItem.to}> {submenuItem.name} </Link>
+      </Menu.Item>
+    ))}
+  </SubMenu>
+);
+
+const submenus = [
+  {
+    name: '系統設定',
+    key: 10000,
+    icon: 'setting',
+    items: deviceSettingsRoutes,
+  },
+];
 
 const sidebar = () => {
   return (
@@ -10,56 +46,10 @@ const sidebar = () => {
       <Menu
         mode="inline"
         defaultSelectedKeys={['1']}
-        defaultOpenKeys={['systemSettings']}
-        style={{ height: '100%', borderRight: 0 }}
+        defaultOpenKeys={[defaultOpenKey(submenus)]}
+        className="menu"
       >
-        <SubMenu
-          key="systemSettings"
-          title={
-            <span>
-              <Icon type="setting" />
-              系統設定
-            </span>
-          }
-        >
-          <Menu.Item key="1">設備設定</Menu.Item>
-          <Menu.Item key="2">使用者設定</Menu.Item>
-          <Menu.Item key="3">群組設定</Menu.Item>
-          <Menu.Item key="4">License序號管理</Menu.Item>
-          <Menu.Item key="4">語音/訊息對應</Menu.Item>
-        </SubMenu>
-        <SubMenu
-          key="sub2"
-          title={
-            <span>
-              <Icon type="laptop" />
-              subnav 2
-            </span>
-          }
-        >
-          <Menu.Item key="5">option5</Menu.Item>
-          <Menu.Item key="6">option6</Menu.Item>
-          <Menu.Item key="7">option7</Menu.Item>
-          <Menu.Item key="8">option8</Menu.Item>
-        </SubMenu>
-        <SubMenu
-          key="sub3"
-          title={
-            <span>
-              <Icon type="gold" />
-              test
-            </span>
-          }
-        >
-          <Menu.Item key="9">
-            <Link to="/login"> Login </Link>
-          </Menu.Item>
-          <Menu.Item key="10">
-            <Link to="/test"> Test </Link>
-          </Menu.Item>
-          <Menu.Item key="11">option11</Menu.Item>
-          <Menu.Item key="12">option12</Menu.Item>
-        </SubMenu>
+        {submenus.map(item => createSubMenu(item))}
       </Menu>
     </div>
   );

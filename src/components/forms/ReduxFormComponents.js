@@ -1,10 +1,36 @@
 import React from 'react';
-import { Input, Radio, Select, Checkbox, DatePicker } from 'antd';
+import { Form, Input, Radio, Select, Checkbox, DatePicker } from 'antd';
 
 const RadioGroup = Radio.Group;
 const { Option } = Select;
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
+
+const FormItem = Form.Item;
+
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 14 },
+  },
+};
+
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 14,
+      offset: 6,
+    },
+  },
+};
 
 const makeField = Component => ({
   input,
@@ -28,9 +54,9 @@ const makeField = Component => ({
   );
 };
 
-const AInput = makeField(Input);
-const ARadioGroup = makeField(RadioGroup);
-const ASelect = makeField(Select);
-const ACheckbox = makeField(Checkbox);
-const ATextarea = makeField(TextArea);
-const ARangePicker = makeField(RangePicker);
+export const AInput = makeField(Input);
+export const ARadioGroup = makeField(RadioGroup);
+export const ASelect = makeField(Select);
+export const ACheckbox = makeField(Checkbox);
+export const ATextarea = makeField(TextArea);
+export const ARangePicker = makeField(RangePicker);

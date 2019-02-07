@@ -12,9 +12,8 @@ const authReducer = (preState = initialState, action) => {
       const account = action.data || null;
       return Object.assign({}, preState, { account });
     default:
-      return preState;
+      return initialState;
   }
-  return initialState;
 };
 
 export default authReducer;
