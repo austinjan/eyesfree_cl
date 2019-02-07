@@ -52,27 +52,3 @@ export const deviceSettingsRoutes = [
     ),
   },
 ];
-
-const fakeAuth = ({ user }) => {
-  return user.authenticated;
-};
-
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        fakeAuth.isAuthenticated ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: props.location },
-            }}
-          />
-        )
-      }
-    />
-  );
-};
