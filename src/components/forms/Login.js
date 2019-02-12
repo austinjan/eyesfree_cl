@@ -1,12 +1,8 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Form, Input, Radio, Select, Checkbox, Button, DatePicker } from 'antd';
+import { Form, Radio, Button } from 'antd';
 import { AInput, ARadioGroup, ARangePicker } from './ReduxFormComponents';
 const FormItem = Form.Item;
-const RadioGroup = Radio.Group;
-const { Option } = Select;
-const { TextArea } = Input;
-const { RangePicker } = DatePicker;
 
 const formItemLayout = {
   labelCol: {
@@ -100,6 +96,6 @@ const validate = values => {
 };
 
 export default reduxForm({
-  form: 'simple', // a unique identifier for this form
+  form: 'login', // a unique identifier for this form
   validate,
 })(login);

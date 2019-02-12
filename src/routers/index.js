@@ -40,11 +40,10 @@ const fakeAuth = ({ user }) => {
   return user.authenticated;
 };
 
-const PrivateRoute = ({ component: Component, key, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      key={key}
       render={props =>
         fakeAuth({ user: { authenticated: true } }) ? (
           <Component {...props} />
@@ -66,6 +65,6 @@ export const makeSettingsRouters = deviceSettingsRoutes.map(item => (
     path={item.to}
     component={item.component}
     to={item.to}
-    key={item.key}
+    key={item.key.toString()}
   />
 ));
