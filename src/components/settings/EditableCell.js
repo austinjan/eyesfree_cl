@@ -8,15 +8,7 @@ const editableRow = ({ form, index, ...props }) => (
   </EditableContext.Provider>
 );
 
-const handleChanged = (props, fields) => {
-  const dataRowKey = props['data-row-key'];
-
-  console.log('field changed  key=%s member=%o', dataRowKey, fields);
-};
-
-export const EditableFormRow = Form.create({ onFieldsChange: handleChanged })(
-  editableRow
-);
+export const EditableFormRow = Form.create()(editableRow);
 
 export const EditOperationCell = ({
   editing,
@@ -72,8 +64,7 @@ export const EditableCell = props => {
     index,
     ...restProps
   } = props;
-  console.log(`EditableCell: title: ${title} dataInddex: ${dataIndex} `);
-  console.log('props = %o', props);
+
   return (
     <EditableContext.Consumer>
       {form => {

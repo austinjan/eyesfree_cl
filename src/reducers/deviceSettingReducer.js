@@ -80,7 +80,8 @@ const deviceSettingReducer = (preState = initialState, action) => {
       const index = copyDevices.findIndex(item => action.key === item.key);
       if (index > -1) {
         const preItem = copyDevices[index];
-        copyDevices.splice(index, 1, ...preItem, ...action.newItem);
+        const newItem = Object.assign({}, preItem, action.newItem);
+        copyDevices[index] = newItem;
         return Object.assign({}, preState, { devices: copyDevices });
       }
       return preState;
