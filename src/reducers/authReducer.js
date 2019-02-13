@@ -5,7 +5,7 @@ const initialState = {
   authenticated: null,
 };
 const authReducer = (preState = initialState, action) => {
-  switch (action) {
+  switch (action.type) {
     case AUTHENTICATED:
       return Object.assign({}, preState, { authenticated: true });
     case SET_USER_ACCOUNT:
