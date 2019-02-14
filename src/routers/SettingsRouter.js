@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Route, Redirect } from 'react-router-dom';
 import { DeviceSettings, UserSettings } from '../containers/settings';
 
 export const deviceSettingsRoutes = [
