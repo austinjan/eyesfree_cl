@@ -6,8 +6,7 @@ import {
   addDevice,
   updateDevice,
   scanDevices,
-  removeDevice,
-  saveDevices,
+  removeDevices,
 } from '../../actions/deviceActions';
 
 import DevicesTable from './DevicesTable';
@@ -16,11 +15,12 @@ import DevicesTable from './DevicesTable';
 // action: add device
 class DeviceSettings extends React.Component {
   render() {
-    const { addDevice, updateDevice, data } = this.props;
+    const { addDevice, updateDevice, removeDevices, data } = this.props;
     return (
       <DevicesTable
         addDevice={addDevice}
         updateDevice={updateDevice}
+        removeDevices={removeDevices}
         data={data}
       />
     );
@@ -35,6 +35,8 @@ const mapStateProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addDevice: newDevice => dispatch(addDevice(newDevice)),
   updateDevice: (key, newDevice) => dispatch(updateDevice(key, newDevice)),
+  removeDevices: keys => dispatch(removeDevices(keys)),
+  scanDevice: () => dispatch(scanDevices),
 });
 export default connect(
   mapStateProps,

@@ -1,11 +1,16 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 
-const tableToolBar = ({ addDevice }) => {
+const tableToolBar = ({ addDevice, scanDevices, removeSelectedDevices }) => {
   return (
     <div className="toolbar">
-      <Button type="primary" icon="search" style={{ margin: '5px' }}>
-        Scan
+      <Button
+        type="primary"
+        icon="search"
+        onClick={scanDevices}
+        style={{ margin: '5px' }}
+      >
+        掃描網域裝置
       </Button>
       <Button
         type="default"
@@ -13,7 +18,15 @@ const tableToolBar = ({ addDevice }) => {
         onClick={addDevice}
         style={{ margin: '5px' }}
       >
-        Add
+        新增裝置
+      </Button>
+      <Button
+        type="danger"
+        icon="delete"
+        onClick={removeSelectedDevices}
+        style={{ margin: '5px' }}
+      >
+        移除選取裝置
       </Button>
     </div>
   );

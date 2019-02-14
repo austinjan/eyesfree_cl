@@ -1,8 +1,7 @@
 import {
   SCAN_DEVICE,
   ADD_DEVICE,
-  REMOVE_DEVICE,
-  SAVE_DEVICES,
+  REMOVE_DEVICES,
   UPDATE_DEVICE,
 } from '../actions/deviceActions';
 
@@ -54,22 +53,19 @@ const initialState = {
 const deviceSettingReducer = (preState = initialState, action) => {
   switch (action.type) {
     case ADD_DEVICE:
-      console.log('deviceSettingReducer: add device');
       const { devices } = preState;
       devices.push(action.newDevice);
       return Object.assign({}, preState, { devices });
 
     case SCAN_DEVICE:
-      console.log('deviceSettingReducer: scan@@@');
       return preState;
 
-    case REMOVE_DEVICE:
-      console.log('deviceSettingReducer: remove device');
-      if (!action.key) {
+    case REMOVE_DEVICES:
+      if (!action.keys) {
         return preState;
       }
       const newDevcies = preState.devices.filter(
-        item => item.key !== action.key
+        item => !action.keys.includes(item.key)
       );
 
       return Object.assign({}, preState, { devices: newDevcies });
@@ -86,9 +82,6 @@ const deviceSettingReducer = (preState = initialState, action) => {
       }
       return preState;
 
-    case SAVE_DEVICES:
-      return Object.assign({}, preState, { devices: action.devices });
-    // save devices
     default:
       return preState;
   }

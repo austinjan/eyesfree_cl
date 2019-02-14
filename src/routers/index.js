@@ -4,6 +4,7 @@ import Login from '../components/forms/Login';
 import Test from '../components/Test';
 import { deviceSettingsRoutes } from './SettingsRouter';
 export { deviceSettingsRoutes } from './SettingsRouter';
+export { MobileRouters } from './mobileRouter';
 
 const mapStateToProps = (state, ownProps) => {
   // return {
@@ -41,12 +42,23 @@ const fakeAuth = ({ user }) => {
 };
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
+  const dimenstion = window.innerWidth || document.documentElement.clientWidth;
+
   return (
     <Route
       {...rest}
       render={props =>
         fakeAuth({ user: { authenticated: true } }) ? (
-          <Component {...props} />
+          dimenstion > 600 ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/mobileRedirect',
+                state: { from: props.location },
+              }}
+            />
+          )
         ) : (
           <Redirect
             to={{

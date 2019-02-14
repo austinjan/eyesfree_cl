@@ -14,6 +14,7 @@ class DevicesTable extends React.Component {
   state = {
     modifyItems: {},
     editingkey: '',
+    selectedRowKeys: [],
   };
 
   isEditing = key => key === this.state.editingkey;
@@ -94,8 +95,26 @@ class DevicesTable extends React.Component {
     },
   ];
 
+  removeSelectedDevcies = () => {
+    const { removeDevices } = this.props;
+    const { selectedRowKeys } = this.state;
+    removeDevices(selectedRowKeys);
+  };
+
+  onSelectChange = selectedRowKeys => {
+    console.log('selected changed %0', selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  };
+
   render() {
-    const { appState, data } = this.props;
+    const { data } = this.props;
+    const { selectedRowKeys } = this.state;
+
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+    };
+
     const columns = this.columns.map(item => {
       if (!item.editable) {
         return item;
@@ -113,8 +132,12 @@ class DevicesTable extends React.Component {
 
     return (
       <div>
-        <TableToolBar addDevice={this.addDefaultDevice} />
+        <TableToolBar
+          addDevice={this.addDefaultDevice}
+          removeSelectedDevices={this.removeSelectedDevcies}
+        />
         <Table
+          rowSelection={rowSelection}
           columns={columns}
           dataSource={data.devices}
           components={{ body: { cell: EditableCell, row: EditableFormRow } }}
