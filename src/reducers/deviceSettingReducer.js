@@ -25,6 +25,7 @@ const initialState = {
       sensors: [
         {
           id: 1,
+          key: 'DI01',
           name: 'Input01',
           dataSize: DataSize.bit,
           mqttBroker: 'mqtt://127.0.0.1',
@@ -36,6 +37,7 @@ const initialState = {
         },
         {
           id: 2,
+          key: 'AI01',
           name: 'AI01',
           dataSize: DataSize.word,
           mqttBroker: 'mqtt://127.0.0.1',
@@ -43,6 +45,37 @@ const initialState = {
           format: {
             prefix: '',
             postfix: ' ',
+          },
+        },
+      ],
+    },
+    {
+      key: '54:23:45:11',
+      ip: '192.168.1.222',
+      name: 'IOT-RemoteIO',
+      sensors: [
+        {
+          id: 'ai01',
+          key: 'ai01',
+          name: 'AI-01',
+          dataSize: DataSize.bit,
+          mqttBroker: 'mqtt://127.0.2.1',
+          topic: 'ai/01',
+          format: {
+            prefix: '',
+            postfix: 'cm',
+          },
+        },
+        {
+          id: 'ai02',
+          key: 'AI02',
+          name: 'AI-02',
+          dataSize: DataSize.word,
+          mqttBroker: 'mqtt://127.0.2.2',
+          topic: 'ai/02',
+          format: {
+            prefix: '',
+            postfix: 'm',
           },
         },
       ],

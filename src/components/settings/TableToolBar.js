@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal } from 'antd';
+import { Button } from 'antd';
 
 const tableToolBar = ({ addDevice, scanDevices, removeSelectedDevices }) => {
   return (

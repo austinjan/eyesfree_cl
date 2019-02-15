@@ -1,5 +1,4 @@
 import React from 'react';
-import { Table, Button } from 'antd';
 import { connect } from 'react-redux';
 
 import {
@@ -36,7 +35,6 @@ const mapDispatchToProps = dispatch => ({
   addDevice: newDevice => dispatch(addDevice(newDevice)),
   updateDevice: (key, newDevice) => dispatch(updateDevice(key, newDevice)),
   removeDevices: keys => dispatch(removeDevices(keys)),
-  scanDevice: () => dispatch(scanDevices),
 });
 export default connect(
   mapStateProps,

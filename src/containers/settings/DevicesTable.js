@@ -6,7 +6,9 @@ import {
   EditableFormRow,
   EditOperationCell,
 } from '../../components/settings/EditableCell';
+import SensorTable from './SensorTable';
 import './DeviceSettings.css';
+import ConnectSensorTable from './SensorTable';
 
 let newDeviceKey = 20000;
 
@@ -15,6 +17,7 @@ class DevicesTable extends React.Component {
     modifyItems: {},
     editingkey: '',
     selectedRowKeys: [],
+    scaning: false,
   };
 
   isEditing = key => key === this.state.editingkey;
@@ -106,6 +109,8 @@ class DevicesTable extends React.Component {
     this.setState({ selectedRowKeys });
   };
 
+  handleSensorChanged = (sensors, key) => {};
+
   render() {
     const { data } = this.props;
     const { selectedRowKeys } = this.state;
@@ -136,11 +141,18 @@ class DevicesTable extends React.Component {
           addDevice={this.addDefaultDevice}
           removeSelectedDevices={this.removeSelectedDevcies}
         />
+
         <Table
           rowSelection={rowSelection}
           columns={columns}
           dataSource={data.devices}
           components={{ body: { cell: EditableCell, row: EditableFormRow } }}
+          expandedRowRender={(record, idex, indent, expaned) => (
+            <ConnectSensorTable
+              sensors={record.sensors}
+              recordKey={record.key}
+            />
+          )}
         />
       </div>
     );
