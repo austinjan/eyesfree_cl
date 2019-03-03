@@ -3,6 +3,7 @@ import {
   ADD_DEVICE,
   REMOVE_DEVICES,
   UPDATE_DEVICE,
+  SET_DEVICES,
 } from '../actions/deviceActions';
 
 const DataSize = {
@@ -75,7 +76,7 @@ const initialState = {
           topic: 'ai/02',
           format: {
             prefix: '',
-            postfix: 'm',
+            postfix: 'm]',
           },
         },
       ],
@@ -83,8 +84,11 @@ const initialState = {
   ],
 };
 
-const deviceSettingReducer = (preState = initialState, action) => {
+const deviceSettingReducer = (preState = {}, action) => {
   switch (action.type) {
+    case SET_DEVICES:
+      console.log('deviceSettingReducer: SET_DEVICES');
+      return Object.assign({}, preState, { ...action.payload });
     case ADD_DEVICE:
       const { devices } = preState;
       devices.push(action.newDevice);

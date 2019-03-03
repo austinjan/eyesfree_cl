@@ -2,6 +2,12 @@ export const SCAN_DEVICE = 'SCAN_DEVICE';
 export const ADD_DEVICE = 'ADD_DEVICE';
 export const REMOVE_DEVICES = 'REMOVE_DEVICES';
 export const UPDATE_DEVICE = 'UPDATE_DEVICE';
+export const SET_DEVICES = 'SET_DEVICES';
+
+export const setDevices = payload => ({
+  type: SET_DEVICES,
+  payload,
+});
 
 export const scanDevices = () => ({
   type: SCAN_DEVICE,

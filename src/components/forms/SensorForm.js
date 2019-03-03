@@ -51,6 +51,8 @@ const option = {
 //   handleFieldChanged: ()=>() }
 const sensorForm = Form.create(option)(props => {
   const { getFieldDecorator } = props.form;
+  const validIPAddress = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  const validHostname = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]* [a-zA-Z0-9])\.)* ([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]* [A-Za-z0-9])$/;
   return (
     <div>
       <Form layout="vertical">
@@ -61,7 +63,22 @@ const sensorForm = Form.create(option)(props => {
         </Form.Item>
         <Form.Item label="Mqtt Broker">
           {getFieldDecorator('mqttBroker', {
-            rules: [{ required: true, message: '請輸入broker網址！' }],
+            rules: [
+              {
+                required: true,
+                message: '請輸入broker網址或是主機站名！',
+              },
+              {
+                required: true,
+                message: '請輸入正確的網址！',
+                pattern: validIPAddress,
+              },
+              {
+                required: true,
+                message: '請輸入正確的網址！',
+                pattern: validHostname,
+              },
+            ],
           })(<Input />)}
         </Form.Item>
         <Form.Item label="Mqtt Topic">
