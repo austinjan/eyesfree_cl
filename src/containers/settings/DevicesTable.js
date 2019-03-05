@@ -10,7 +10,14 @@ import SensorTable from './SensorTable';
 import './DeviceSettings.css';
 import ConnectSensorTable from './SensorTable';
 
-let newDeviceKey = 20000;
+var uniqueKey = function() {
+  return (
+    'id-' +
+    Math.random()
+      .toString(36)
+      .substr(2, 16)
+  );
+};
 
 class DevicesTable extends React.Component {
   state = {
@@ -43,12 +50,11 @@ class DevicesTable extends React.Component {
     const { addDevice } = this.props;
 
     addDevice({
-      key: newDeviceKey.toString(10),
+      key: uniqueKey(),
       ip: '172.0.0.1',
       name: 'Device Name',
       sensors: [],
     });
-    newDeviceKey = newDeviceKey + 1;
   };
 
   columns = [

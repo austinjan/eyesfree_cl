@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import authReducer from './authReducer';
-import deviceSettingReducer from './deviceSettingReducer';
+import devicesReducer from './deviceSettingReducer';
 import appStateReducer from './appStateReducer';
+import errorReducer from './errorReducer';
 
 const initialState = {
   // init state object
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers({
   // state object: reducer function
   user: authReducer,
   form: formReducer,
-  devices: deviceSettingReducer,
+  devices: devicesReducer,
   appState: appStateReducer,
+  errors: errorReducer,
 });

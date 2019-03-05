@@ -17,78 +17,12 @@ const DataFormat = {
   bit: 'bit',
 };
 
-const initialState = {
-  devices: [
-    {
-      key: '10000',
-      ip: '192.168.1.1',
-      name: 'IOT-Gateway',
-      sensors: [
-        {
-          id: 1,
-          key: 'DI01',
-          name: 'Input01',
-          dataSize: DataSize.bit,
-          mqttBroker: 'mqtt://127.0.0.1',
-          topic: 'input/1',
-          format: {
-            prefix: '',
-            postfix: ' ',
-          },
-        },
-        {
-          id: 2,
-          key: 'AI01',
-          name: 'AI01',
-          dataSize: DataSize.word,
-          mqttBroker: 'mqtt://127.0.0.1',
-          topic: 'ai/1',
-          format: {
-            prefix: '',
-            postfix: ' ',
-          },
-        },
-      ],
-    },
-    {
-      key: '54:23:45:11',
-      ip: '192.168.1.222',
-      name: 'IOT-RemoteIO',
-      sensors: [
-        {
-          id: 'ai01',
-          key: 'ai01',
-          name: 'AI-01',
-          dataSize: DataSize.bit,
-          mqttBroker: 'mqtt://127.0.2.1',
-          topic: 'ai/01',
-          format: {
-            prefix: '',
-            postfix: 'cm',
-          },
-        },
-        {
-          id: 'ai02',
-          key: 'AI02',
-          name: 'AI-02',
-          dataSize: DataSize.word,
-          mqttBroker: 'mqtt://127.0.2.2',
-          topic: 'ai/02',
-          format: {
-            prefix: '',
-            postfix: 'm]',
-          },
-        },
-      ],
-    },
-  ],
-};
-
-const deviceSettingReducer = (preState = {}, action) => {
+const devicesReducer = (preState = {}, action) => {
   switch (action.type) {
     case SET_DEVICES:
-      console.log('deviceSettingReducer: SET_DEVICES');
-      return Object.assign({}, preState, { ...action.payload });
+      // action.payload: [{device object}]
+      //console.log('deviceSettingReducer: SET_DEVICES', action.payload);
+      return Object.assign({}, preState, { devices: action.payload });
     case ADD_DEVICE:
       const { devices } = preState;
       devices.push(action.newDevice);
@@ -124,4 +58,4 @@ const deviceSettingReducer = (preState = {}, action) => {
   }
 };
 
-export default deviceSettingReducer;
+export default devicesReducer;

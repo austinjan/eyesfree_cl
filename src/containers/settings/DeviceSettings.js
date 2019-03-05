@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {
-  addDevice,
-  updateDevice,
+  apiAddDevice,
+  apiUpdateDevice,
   scanDevices,
-  removeDevices,
+  apiRemoveDevices,
 } from '../../actions/deviceActions';
 
 import DevicesTable from './DevicesTable';
@@ -32,9 +32,9 @@ const mapStateProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addDevice: newDevice => dispatch(addDevice(newDevice)),
-  updateDevice: (key, newDevice) => dispatch(updateDevice(key, newDevice)),
-  removeDevices: keys => dispatch(removeDevices(keys)),
+  addDevice: newDevice => dispatch(apiAddDevice(newDevice)),
+  updateDevice: (key, newDevice) => dispatch(apiUpdateDevice(key, newDevice)),
+  removeDevices: keys => dispatch(apiRemoveDevices(keys)),
 });
 export default connect(
   mapStateProps,
