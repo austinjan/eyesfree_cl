@@ -4,13 +4,13 @@ const mongo = require("koa-mongo");
 const app = new koa();
 const fs = require("fs");
 
-const defaultDevices = require("./static/defaultDevices");
+const devices = require("./static/defaultDevices");
 
 const _ = router();
 
 _.get("/api/devices", async ctx => {
-  ctx.body = JSON.stringify(defaultDevices);
-  console.log("get /api/devices %o", defaultDevices);
+  ctx.body = JSON.stringify(devices.defaultDevices);
+  console.log("get /api/devices %s", ctx.body);
 });
 
 //query string /?key1=value1&key2=value2

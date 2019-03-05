@@ -1,4 +1,4 @@
-export const defaultDevices = {
+const defaultDevices = {
   devices: [
     {
       key: "10000",
@@ -64,3 +64,5 @@ export const defaultDevices = {
     }
   ]
 };
+
+module.exports.defaultDevices = defaultDevices;
