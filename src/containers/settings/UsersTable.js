@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Table } from 'antd';
 import TableToolBar from '../../components/settings/TableToolBar';
 import {
@@ -6,25 +7,17 @@ import {
   EditableFormRow,
   EditOperationCell,
 } from '../../components/settings/EditableCell';
-import SensorTable from './SensorTable';
 import './tableStyle.css';
-import ConnectSensorTable from './SensorTable';
 
-var uniqueKey = function() {
-  return (
-    'id-' +
-    Math.random()
-      .toString(36)
-      .substr(2, 16)
-  );
-};
+class UsersTable extends React.Component {
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+  };
 
-class DevicesTable extends React.Component {
   state = {
     modifyItems: {},
     editingkey: '',
     selectedRowKeys: [],
-    scaning: false,
   };
 
   isEditing = key => key === this.state.editingkey;
@@ -46,11 +39,11 @@ class DevicesTable extends React.Component {
     this.setState({ editingkey: key });
   };
 
-  addDefaultDevice = () => {
+  addDefaultUser = () => {
     const { addDevice } = this.props;
 
     addDevice({
-      key: uniqueKey(),
+      key: '',
       ip: '172.0.0.1',
       name: 'Device Name',
       sensors: [],
@@ -65,22 +58,10 @@ class DevicesTable extends React.Component {
       editable: true,
     },
     {
-      title: 'IP',
-      dataIndex: 'ip',
-      key: 'ip',
+      title: 'E-mail',
+      dataIndex: 'email',
+      key: 'email',
       editable: true,
-    },
-    {
-      title: '管理人員',
-      key: 'management',
-      render: (text, record) => <span>大蔡</span>,
-      editable: false,
-    },
-    {
-      title: '供應商',
-      key: 'provider',
-      render: (text, record) => <span>小蔡</span>,
-      editable: false,
     },
     {
       title: 'Action',
@@ -144,7 +125,7 @@ class DevicesTable extends React.Component {
       <div>
         <TableToolBar
           handlers={{
-            addItem: this.addDefaultDevice,
+            addItem: () => {},
             removeSelectedItems: this.removeSelectedDevcies,
           }}
           componentsText={{
@@ -157,18 +138,12 @@ class DevicesTable extends React.Component {
         <Table
           rowSelection={rowSelection}
           columns={columns}
-          dataSource={data.devices}
+          dataSource={data}
           components={{ body: { cell: EditableCell, row: EditableFormRow } }}
-          expandedRowRender={(record, idex, indent, expaned) => (
-            <ConnectSensorTable
-              sensors={record.sensors}
-              recordKey={record.key}
-            />
-          )}
         />
       </div>
     );
   }
 }
 
-export default DevicesTable;
+export default UsersTable;

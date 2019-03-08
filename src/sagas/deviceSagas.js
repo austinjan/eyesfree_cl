@@ -1,10 +1,10 @@
-import { put, call, takeEvery, all } from 'redux-saga/effects';
+import { put, call, takeEvery } from 'redux-saga/effects';
 import {
   apiGetDevices,
   apiAddDevice,
   apiUpdateDevice,
   apiRemoveDevice,
-} from './api.js';
+} from '../api';
 
 import {
   SET_DEVICES,
@@ -15,7 +15,7 @@ import {
   removeDevices,
   API_UPDATE_DEVICE,
   API_REMOVE_DEVICES,
-} from '../actions/deviceActions';
+} from '../actions';
 
 import { FETCH_FAIL } from '../actions';
 
@@ -53,8 +53,4 @@ export function* watchDevices() {
   yield takeEvery(API_ADD_DEVICE, addDevicesSaga);
   yield takeEvery(API_UPDATE_DEVICE, updateDevicesSaga);
   yield takeEvery(API_REMOVE_DEVICES, removeDevicesSaga);
-}
-
-export default function* rootSaga() {
-  yield all([watchDevices()]);
 }

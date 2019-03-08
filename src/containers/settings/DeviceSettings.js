@@ -6,7 +6,7 @@ import {
   apiUpdateDevice,
   scanDevices,
   apiRemoveDevices,
-} from '../../actions/deviceActions';
+} from '../../actions';
 
 import DevicesTable from './DevicesTable';
 

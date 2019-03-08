@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import devicesReducer from './deviceSettingReducer';
 import appStateReducer from './appStateReducer';
 import errorReducer from './errorReducer';
+import userReducer from './userSettingsReducer';
 
 const initialState = {
   // init state object
@@ -20,6 +21,7 @@ const initialState = {
 export const rootReducer = combineReducers({
   // state object: reducer function
   user: authReducer,
+  users: userReducer,
   form: formReducer,
   devices: devicesReducer,
   appState: appStateReducer,

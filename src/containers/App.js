@@ -6,9 +6,9 @@ import { Layout } from 'antd';
 import { rootReducer } from '../reducers';
 import Sidebar from '../components/sidebar/Sidebar';
 import ContentArea from '../components/layouts/ContentArea';
-import rootSagas from '../sagas/sagas';
+import rootSagas from '../sagas';
 import createSagaMiddleware from 'redux-saga';
-import { initDevices } from '../actions/deviceActions';
+import { initDevices, apiGetAllUser } from '../actions';
 
 import './App.css';
 
@@ -26,6 +26,7 @@ sagaMiddleware.run(rootSagas);
 class App extends Component {
   componentDidMount() {
     store.dispatch(initDevices());
+    store.dispatch(apiGetAllUser());
   }
 
   render() {

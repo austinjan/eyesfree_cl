@@ -1,11 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import UsersTable from './UsersTable';
 
-const userSettings = () => {
+const userSettings = ({ data }) => {
   return (
     <div>
-      <h2>UserSettings</h2>
+      <UsersTable data={data} />
     </div>
   );
 };
 
-export default userSettings;
+const mapStateProps = state => ({
+  appState: state.appState,
+  data: state.users,
+});
+
+const mapDispatchToProps = dispatch => ({
+  // addDevice: newDevice => dispatch(apiAddDevice(newDevice)),
+  // updateDevice: (key, newDevice) => dispatch(apiUpdateDevice(key, newDevice)),
+  // removeDevices: keys => dispatch(apiRemoveDevices(keys)),
+});
+export default connect(
+  mapStateProps,
+  mapDispatchToProps
+)(userSettings);

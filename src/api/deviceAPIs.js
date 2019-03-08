@@ -1,6 +1,6 @@
 export const apiGetDevices = async () => {
   try {
-    const response = await fetch('/api/devices/all');
+    const response = await fetch('/api/getall/devices');
 
     const data = await response.json();
     console.log('getDevice %o', data);

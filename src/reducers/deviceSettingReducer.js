@@ -20,8 +20,6 @@ const DataFormat = {
 const devicesReducer = (preState = {}, action) => {
   switch (action.type) {
     case SET_DEVICES:
-      // action.payload: [{device object}]
-      //console.log('deviceSettingReducer: SET_DEVICES', action.payload);
       return Object.assign({}, preState, { devices: action.payload });
     case ADD_DEVICE:
       const { devices } = preState;

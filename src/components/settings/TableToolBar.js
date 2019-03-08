@@ -1,35 +1,49 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'antd';
 
-const tableToolBar = ({ addDevice, scanDevices, removeSelectedDevices }) => {
+const tableToolBar = ({ handlers, componentsText }) => {
+  const { addItem, scanDevices, removeSelectedItems } = handlers;
+
   return (
     <div className="toolbar">
-      <Button
-        type="primary"
-        icon="search"
-        onClick={scanDevices}
-        style={{ margin: '5px' }}
-      >
-        掃描網域裝置
-      </Button>
+      {componentsText.scan ? (
+        <Button
+          type="primary"
+          icon="search"
+          onClick={scanDevices}
+          style={{ margin: '5px' }}
+        >
+          {componentsText.scan}
+        </Button>
+      ) : null}
       <Button
         type="default"
         icon="plus"
-        onClick={addDevice}
+        onClick={addItem}
         style={{ margin: '5px' }}
       >
-        新增裝置
+        {componentsText.add}
       </Button>
       <Button
         type="danger"
         icon="delete"
-        onClick={removeSelectedDevices}
+        onClick={removeSelectedItems}
         style={{ margin: '5px' }}
       >
-        移除選取裝置
+        {componentsText.remove}
       </Button>
     </div>
   );
 };
 
+tableToolBar.propTypes = {
+  handlers: PropTypes.object,
+  componentsText: PropTypes.object,
+};
+
+tableToolBar.defaultProps = {
+  handlers: {},
+  componentsText: {},
+};
 export default tableToolBar;
