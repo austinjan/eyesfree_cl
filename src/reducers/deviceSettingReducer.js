@@ -1,7 +1,5 @@
 import {
   SCAN_DEVICE,
-  ADD_DEVICE,
-  REMOVE_DEVICES,
   UPDATE_DEVICE,
   SET_DEVICES,
 } from '../actions/deviceActions';
@@ -21,23 +19,19 @@ const devicesReducer = (preState = {}, action) => {
   switch (action.type) {
     case SET_DEVICES:
       return Object.assign({}, preState, { devices: action.payload });
-    case ADD_DEVICE:
-      const { devices } = preState;
-      devices.push(action.newDevice);
-      return Object.assign({}, preState, { devices });
 
     case SCAN_DEVICE:
       return preState;
 
-    case REMOVE_DEVICES:
-      if (!action.keys) {
-        return preState;
-      }
-      const newDevcies = preState.devices.filter(
-        item => !action.keys.includes(item.key)
-      );
+    // case REMOVE_DEVICES:
+    //   if (!action.keys) {
+    //     return preState;
+    //   }
+    //   const newDevcies = preState.devices.filter(
+    //     item => !action.keys.includes(item.key)
+    //   );
 
-      return Object.assign({}, preState, { devices: newDevcies });
+    //   return Object.assign({}, preState, { devices: newDevcies });
 
     // remove device
     case UPDATE_DEVICE:

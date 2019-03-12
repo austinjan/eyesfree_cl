@@ -26,8 +26,8 @@ export function* getDevicesSaga() {
 
 export function* addDevicesSaga(action) {
   try {
-    yield call(apiAddDevice, action.payload);
-    yield put(addDevice(action.payload));
+    const res = yield call(apiAddDevice, action.payload);
+    yield put({ type: SET_DEVICES, payload: res });
   } catch (err) {
     console.log(err);
     yield put(fetchFail(err));

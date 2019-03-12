@@ -11,7 +11,8 @@ export const apiGetDevices = async () => {
 };
 
 export const apiAddDevice = async newDevice => {
-  apiCreate(newDevice, 'devices');
+  const ret = await apiCreate(newDevice, 'devices');
+  return ret;
 };
 
 export const apiUpdateDevice = async (key, newItem) => {
@@ -21,18 +22,4 @@ export const apiUpdateDevice = async (key, newItem) => {
 export const apiRemoveDevice = async keys => {
   const ret = await apiRemove(keys, 'devices');
   return ret;
-  // try {
-  //   const url = '/api/devices/delete';
-  //   const response = await fetch(url, {
-  //     method: 'DELETE',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(keys),
-  //   });
-  //   console.log('DEL request device response', response);
-  // } catch (err) {
-  //   console.log('ERRRRRRRRERERRRR');
-  // }
 };
