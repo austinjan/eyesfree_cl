@@ -10,9 +10,7 @@ import {
   SET_DEVICES,
   INIT_DEVICES,
   API_ADD_DEVICE,
-  addDevice,
   updateDevice,
-  removeDevices,
   FETCH_UPDATE_DEVICE,
   FETCH_REMOVE_DEVICES,
 } from '../actions';

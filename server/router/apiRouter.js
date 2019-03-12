@@ -143,12 +143,4 @@ apiRouter.delete('/api/remove/:collection', async (ctx, next) => {
   }
 });
 
-// //query string /?key1=value1&key2=value2
-// // ctx.query = {key1:value1, key2:value2}
-
-// apiRouter.get('/hello', async ctx => {
-//   ctx.body = '<h2>Hello</h2>';
-//   console.log('get /hello');
-// });
-
 module.exports = apiRouter;
