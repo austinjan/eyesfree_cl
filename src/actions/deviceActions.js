@@ -2,9 +2,9 @@ export const SCAN_DEVICE = 'SCAN_DEVICE';
 export const ADD_DEVICE = 'ADD_DEVICE';
 export const API_ADD_DEVICE = 'API_ADD_DEVICE';
 export const REMOVE_DEVICES = 'REMOVE_DEVICES';
-export const API_REMOVE_DEVICES = 'API_REMOVE_DEVICES';
+export const FETCH_REMOVE_DEVICES = 'API_REMOVE_DEVICES';
 export const UPDATE_DEVICE = 'UPDATE_DEVICE';
-export const API_UPDATE_DEVICE = 'API_UPDATE_DEVICE';
+export const FETCH_UPDATE_DEVICE = 'API_UPDATE_DEVICE';
 export const SET_DEVICES = 'SET_DEVICES';
 export const INIT_DEVICES = 'INIT_DEVICES';
 
@@ -23,7 +23,7 @@ export const addDevice = newDevice => ({
 });
 
 // process by saga.js
-export const apiAddDevice = newDevice => ({
+export const fetchAddDevice = newDevice => ({
   type: API_ADD_DEVICE,
   payload: newDevice,
 });
@@ -33,13 +33,13 @@ export const removeDevices = keys => ({
   keys,
 });
 
-export const apiRemoveDevices = keys => ({
-  type: API_REMOVE_DEVICES,
+export const fetchRemoveDevices = keys => ({
+  type: FETCH_REMOVE_DEVICES,
   keys,
 });
 
 export const apiUpdateDevice = (key, newItem) => ({
-  type: API_UPDATE_DEVICE,
+  type: FETCH_UPDATE_DEVICE,
   key,
   newItem,
 });

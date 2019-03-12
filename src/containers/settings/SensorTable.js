@@ -131,7 +131,7 @@ class SensorTable extends React.Component {
     },
   ];
   render() {
-    const { editingKey, data } = this.state;
+    const { editingKey } = this.state;
     const { sensors } = this.props;
 
     return (

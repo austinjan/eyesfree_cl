@@ -8,7 +8,7 @@ import Sidebar from '../components/sidebar/Sidebar';
 import ContentArea from '../components/layouts/ContentArea';
 import rootSagas from '../sagas';
 import createSagaMiddleware from 'redux-saga';
-import { initDevices, apiGetAllUser } from '../actions';
+import { initDevices, fetchAllUser } from '../actions';
 
 import './App.css';
 
@@ -26,7 +26,7 @@ sagaMiddleware.run(rootSagas);
 class App extends Component {
   componentDidMount() {
     store.dispatch(initDevices());
-    store.dispatch(apiGetAllUser());
+    store.dispatch(fetchAllUser());
   }
 
   render() {

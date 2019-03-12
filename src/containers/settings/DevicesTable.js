@@ -10,9 +10,9 @@ import SensorTable from './SensorTable';
 import './tableStyle.css';
 import ConnectSensorTable from './SensorTable';
 
-var uniqueKey = function() {
+let uniqueKey = function() {
   return (
-    'id-' +
+    'dev-' +
     Math.random()
       .toString(36)
       .substr(2, 16)

@@ -1,46 +1,21 @@
-export const apiGetDevices = async () => {
-  try {
-    const response = await fetch('/api/getall/devices');
+import { apiCreate, apiUpdate } from './crudAPIs';
 
-    const data = await response.json();
-    console.log('getDevice %o', data);
-    return data;
-  } catch (err) {
-    console.log('ERRRRRRRR');
-    console.log(err);
+export const apiGetDevices = async () => {
+  const response = await fetch('/api/getall/devices');
+  if (!response.ok) {
+    console.log('ERRRRor!!!! get /api/getall/devices');
+    throw Error(response.statusText);
   }
+  const data = await response.json();
+  return data;
 };
 
 export const apiAddDevice = async newDevice => {
-  try {
-    const response = await fetch('/api/devices/add', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newDevice),
-    });
-    console.log('POST add device response', response);
-  } catch (err) {
-    console.log('ERRRRRRRRERERRRR');
-  }
+  apiCreate(newDevice, 'devices');
 };
 
-export const apiUpdateDevice = async (key, newDevice) => {
-  try {
-    const response = await fetch('/api/devices/update', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ key, newDevice }),
-    });
-    console.log('POST update device response', response);
-  } catch (err) {
-    console.log('ERRRRRRRRERERRRR');
-  }
+export const apiUpdateDevice = async (key, newItem) => {
+  apiUpdate(key, newItem, 'devices');
 };
 
 export const apiRemoveDevice = async keys => {

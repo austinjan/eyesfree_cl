@@ -9,6 +9,15 @@ import {
 } from '../../components/settings/EditableCell';
 import './tableStyle.css';
 
+let uniqueKey = function() {
+  return (
+    'user-' +
+    Math.random()
+      .toString(36)
+      .substr(2, 16)
+  );
+};
+
 class UsersTable extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
@@ -23,7 +32,7 @@ class UsersTable extends React.Component {
   isEditing = key => key === this.state.editingkey;
 
   save = (form, key) => {
-    const { updateDevice } = this.props;
+    const { updateUser } = this.props;
 
     form.validateFields((err, row) => {
       if (err) {
@@ -31,7 +40,7 @@ class UsersTable extends React.Component {
       }
 
       this.setState({ editingkey: '' });
-      updateDevice(key, row);
+      updateUser(key, row);
     });
   };
 
@@ -40,13 +49,13 @@ class UsersTable extends React.Component {
   };
 
   addDefaultUser = () => {
-    const { addDevice } = this.props;
-
-    addDevice({
-      key: '',
-      ip: '172.0.0.1',
-      name: 'Device Name',
-      sensors: [],
+    const { addUser } = this.props;
+    const key = uniqueKey();
+    addUser({
+      key: key,
+      name: '輸入名稱',
+      email: '請輸入電子郵件',
+      password: '請輸入密碼',
     });
   };
 
@@ -98,7 +107,7 @@ class UsersTable extends React.Component {
   handleSensorChanged = (sensors, key) => {};
 
   render() {
-    const { data } = this.props;
+    const { data, searchUser } = this.props;
     const { selectedRowKeys } = this.state;
 
     const rowSelection = {
@@ -125,13 +134,13 @@ class UsersTable extends React.Component {
       <div>
         <TableToolBar
           handlers={{
-            addItem: () => {},
+            addItem: this.addDefaultUser,
             removeSelectedItems: this.removeSelectedDevcies,
+            onSearch: searchUser,
           }}
           componentsText={{
-            add: '新增裝置',
-            remove: '移除選取裝置',
-            scan: '掃描網域裝置',
+            add: '新增使用者',
+            remove: '移除選取使用者',
           }}
         />
 

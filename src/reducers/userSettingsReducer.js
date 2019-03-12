@@ -1,4 +1,4 @@
-import { SET_USERS } from '../actions';
+import { SET_USERS, UPDATE_USER } from '../actions';
 
 const userReducer = (preState = [], action) => {
   switch (action.type) {
@@ -8,6 +8,18 @@ const userReducer = (preState = [], action) => {
         return action.payload.slice(0, action.payload.length);
       } else {
         return preState;
+      }
+
+    case UPDATE_USER:
+      const copyUsers = [...preState];
+      const index = copyUsers.findIndex(
+        item => action.payload.key === item.key
+      );
+      if (index > -1) {
+        const preItem = copyUsers[index];
+        const newItem = Object.assign({}, preItem, action.payload.newItem);
+        copyUsers[index] = newItem;
+        return copyUsers;
       }
 
     default:

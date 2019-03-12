@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Button, Input } from 'antd';
 
+const handleInputChanged = (onSearch, e) => {
+  onSearch(e.target.value);
+};
 const tableToolBar = ({ handlers, componentsText }) => {
-  const { addItem, scanDevices, removeSelectedItems } = handlers;
+  const { addItem, scanDevices, removeSelectedItems, onSearch } = handlers;
 
   return (
     <div className="toolbar">
@@ -33,6 +36,19 @@ const tableToolBar = ({ handlers, componentsText }) => {
       >
         {componentsText.remove}
       </Button>
+
+      {onSearch ? (
+        <Input.Search
+          onChange={e => handleInputChanged(onSearch, e)}
+          onSearch={onSearch}
+          style={{
+            right: '5px',
+            margin: '5px',
+            maxWidth: '450px',
+            position: 'absolute',
+          }}
+        />
+      ) : null}
     </div>
   );
 };

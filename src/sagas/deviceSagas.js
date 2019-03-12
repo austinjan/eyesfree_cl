@@ -13,11 +13,11 @@ import {
   addDevice,
   updateDevice,
   removeDevices,
-  API_UPDATE_DEVICE,
-  API_REMOVE_DEVICES,
+  FETCH_UPDATE_DEVICE,
+  FETCH_REMOVE_DEVICES,
 } from '../actions';
 
-import { FETCH_FAIL } from '../actions';
+import { fetchFail } from '../actions';
 
 export function* getDevicesSaga() {
   const devices = yield call(apiGetDevices);
@@ -25,24 +25,29 @@ export function* getDevicesSaga() {
 }
 
 export function* addDevicesSaga(action) {
-  yield call(apiAddDevice, action.payload);
-  yield put(addDevice(action.payload));
+  try {
+    yield call(apiAddDevice, action.payload);
+    yield put(addDevice(action.payload));
+  } catch (err) {
+    console.log(err);
+    yield put(fetchFail(err));
+  }
 }
 
 export function* updateDevicesSaga(action) {
   try {
     yield call(apiUpdateDevice, action.key, action.newItem);
+    yield put(updateDevice(action.key, action.newItem));
   } catch (err) {
-    yield put(FETCH_FAIL);
+    yield put(fetchFail(err));
   }
-  yield put(updateDevice(action.key, action.newItem));
 }
 
 export function* removeDevicesSaga(action) {
   try {
     yield call(apiRemoveDevice, action.keys);
   } catch (err) {
-    yield put(FETCH_FAIL);
+    yield put(fetchFail(err));
   }
   yield put(removeDevices(action.keys));
 }
@@ -51,6 +56,6 @@ export function* watchDevices() {
   yield console.log('Saga ganerator function watchInitDevices ....');
   yield takeEvery(INIT_DEVICES, getDevicesSaga);
   yield takeEvery(API_ADD_DEVICE, addDevicesSaga);
-  yield takeEvery(API_UPDATE_DEVICE, updateDevicesSaga);
-  yield takeEvery(API_REMOVE_DEVICES, removeDevicesSaga);
+  yield takeEvery(FETCH_UPDATE_DEVICE, updateDevicesSaga);
+  yield takeEvery(FETCH_REMOVE_DEVICES, removeDevicesSaga);
 }

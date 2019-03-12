@@ -13,9 +13,8 @@
   "dependencies": {
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-mongo": "^1.6.0",
     "koa-router": "^7.4.0",
-    "monk": "^6.0.6",
+    "mongodb": "^3.1.13",
     "nodemon": "^1.18.10"
   },
   "devDependencies": {
