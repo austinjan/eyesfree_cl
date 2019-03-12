@@ -4,6 +4,7 @@ import {
   apiFuzzySearchUsers,
   apiUpdateUser,
   apiAddUser,
+  apiRemoveUsers,
 } from '../api';
 
 import {
@@ -11,6 +12,8 @@ import {
   FETCH_FILTERED_USERS,
   FETCH_UPDATE_USER,
   FETCH_ADD_USER,
+  FETCH_REMOVE_USERS,
+  removeUsers,
   setUsers,
   updateUser,
   fetchFail,
@@ -49,6 +52,15 @@ export function* updateUserSaga(action) {
   }
 }
 
+export function* removeUsersSaga(action) {
+  try {
+    const users = yield call(apiRemoveUsers, action.payload);
+    yield put(setUsers(users));
+  } catch (err) {
+    yield put(fetchFail(err));
+  }
+}
+
 export function* getAllUsersSaga(action) {
   try {
     const users = yield call(apiGetAllUsers);
@@ -63,5 +75,5 @@ export function* watchUsers() {
   yield takeEvery(FETCH_FILTERED_USERS, searchUsersSaga);
   yield takeEvery(FETCH_ADD_USER, addUserSaga);
   yield takeEvery(FETCH_UPDATE_USER, updateUserSaga);
-  // yield takeEvery(API_REMOVE_DEVICES, removeDevicesSaga);
+  yield takeEvery(FETCH_REMOVE_USERS, removeUsersSaga);
 }

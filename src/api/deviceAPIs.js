@@ -1,4 +1,4 @@
-import { apiCreate, apiUpdate } from './crudAPIs';
+import { apiCreate, apiUpdate, apiRemove } from './crudAPIs';
 
 export const apiGetDevices = async () => {
   const response = await fetch('/api/getall/devices');
@@ -19,18 +19,20 @@ export const apiUpdateDevice = async (key, newItem) => {
 };
 
 export const apiRemoveDevice = async keys => {
-  try {
-    const url = '/api/devices/delete';
-    const response = await fetch(url, {
-      method: 'DELETE',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(keys),
-    });
-    console.log('DEL request device response', response);
-  } catch (err) {
-    console.log('ERRRRRRRRERERRRR');
-  }
+  const ret = await apiRemove(keys, 'devices');
+  return ret;
+  // try {
+  //   const url = '/api/devices/delete';
+  //   const response = await fetch(url, {
+  //     method: 'DELETE',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(keys),
+  //   });
+  //   console.log('DEL request device response', response);
+  // } catch (err) {
+  //   console.log('ERRRRRRRRERERRRR');
+  // }
 };

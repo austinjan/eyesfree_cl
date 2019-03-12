@@ -94,10 +94,10 @@ class UsersTable extends React.Component {
     },
   ];
 
-  removeSelectedDevcies = () => {
-    const { removeDevices } = this.props;
+  removeSelectedUsers = () => {
+    const { removeUsers } = this.props;
     const { selectedRowKeys } = this.state;
-    removeDevices(selectedRowKeys);
+    removeUsers(selectedRowKeys);
   };
 
   onSelectChange = selectedRowKeys => {
@@ -135,7 +135,7 @@ class UsersTable extends React.Component {
         <TableToolBar
           handlers={{
             addItem: this.addDefaultUser,
-            removeSelectedItems: this.removeSelectedDevcies,
+            removeSelectedItems: this.removeSelectedUsers,
             onSearch: searchUser,
           }}
           componentsText={{

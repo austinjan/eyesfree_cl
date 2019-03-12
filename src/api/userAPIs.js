@@ -1,4 +1,4 @@
-import { apiFuzzySearch, apiUpdate, apiCreate } from './crudAPIs';
+import { apiFuzzySearch, apiUpdate, apiCreate, apiRemove } from './crudAPIs';
 
 export const apiGetAllUsers = async () => {
   const response = await fetch('/api/getall/users');
@@ -14,7 +14,13 @@ export const apiUpdateUser = async (key, newItem) => {
 };
 
 export const apiAddUser = async newItem => {
-  apiCreate(newItem, 'users');
+  const response = await apiCreate(newItem, 'users');
+  return response;
+};
+
+export const apiRemoveUsers = async keys => {
+  const response = await apiRemove(keys, 'users');
+  return response;
 };
 
 export const apiFuzzySearchUsers = async searchingText => {

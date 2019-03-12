@@ -1,9 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import UsersTable from './UsersTable';
-import { getUsersFilter, fetchUpdatUser, fetchAddUser } from '../../actions';
+import {
+  getUsersFilter,
+  fetchUpdatUser,
+  fetchAddUser,
+  fetchRemoveUsers,
+} from '../../actions';
 
-const userSettings = ({ data, searchUser, updateUser, addUser }) => {
+const userSettings = ({
+  data,
+  searchUser,
+  updateUser,
+  addUser,
+  removeUsers,
+}) => {
   return (
     <div>
       <UsersTable
@@ -11,6 +22,7 @@ const userSettings = ({ data, searchUser, updateUser, addUser }) => {
         searchUser={searchUser}
         updateUser={updateUser}
         addUser={addUser}
+        removeUsers={removeUsers}
       />
     </div>
   );
@@ -25,7 +37,7 @@ const mapDispatchToProps = dispatch => ({
   searchUser: searchString => dispatch(getUsersFilter(searchString)),
   addUser: newUser => dispatch(fetchAddUser(newUser)),
   updateUser: (key, newDevice) => dispatch(fetchUpdatUser(key, newDevice)),
-  // removeDevices: keys => dispatch(apiRemoveDevices(keys)),
+  removeUsers: keys => dispatch(fetchRemoveUsers(keys)),
 });
 export default connect(
   mapStateProps,

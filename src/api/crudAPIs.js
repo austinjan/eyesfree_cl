@@ -12,6 +12,8 @@ export const apiCreate = async (item, collection) => {
   if (!response.ok) {
     throw Error(response.statusText);
   }
+  const ret = await response.json();
+  return ret;
 };
 
 export const apiFuzzySearch = async (searchingText, collection) => {
@@ -39,4 +41,22 @@ export const apiUpdate = async (key, newItem, collection) => {
   if (!response.ok) {
     throw Error(response.statusText);
   }
+};
+
+export const apiRemove = async (keys, collection) => {
+  const response = await fetch(`/api/remove/${collection}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(keys),
+  });
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+
+  const ret = await response.json();
+  console.log('const apiRemove ret=', ret);
+  return ret;
 };

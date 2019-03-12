@@ -45,11 +45,13 @@ export function* updateDevicesSaga(action) {
 
 export function* removeDevicesSaga(action) {
   try {
-    yield call(apiRemoveDevice, action.keys);
+    const res = yield call(apiRemoveDevice, action.keys);
+    console.log('function* removeDevicesSaga: ', res);
+    yield put({ type: SET_DEVICES, payload: res });
   } catch (err) {
     yield put(fetchFail(err));
   }
-  yield put(removeDevices(action.keys));
+  //yield put(removeDevices(action.keys));
 }
 
 export function* watchDevices() {
