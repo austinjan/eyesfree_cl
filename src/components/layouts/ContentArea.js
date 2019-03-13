@@ -3,6 +3,7 @@ import React from 'react';
 import {
   makeRootRoutes,
   makeSettingsRouters,
+  makeMonitorRouters,
   MobileRouters,
 } from '../../routers';
 
@@ -11,6 +12,7 @@ const contentArea = () => {
     <div>
       {makeRootRoutes}
       {makeSettingsRouters}
+      {makeMonitorRouters}
       <MobileRouters />
     </div>
   );

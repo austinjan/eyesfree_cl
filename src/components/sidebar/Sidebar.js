@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
-import { deviceSettingsRoutes } from '../../routers';
+import { deviceSettingsRoutes, monitorRouters } from '../../routers';
+import { MeterIcon } from '../../components/svg';
 import './Sidebar.css';
 
 const SubMenu = Menu.SubMenu;
@@ -18,7 +19,11 @@ const createSubMenu = submenu => (
     key={submenu.key}
     title={
       <span>
-        <Icon type={submenu.icon} />
+        {typeof submenu.icon === 'string' ? (
+          <Icon type={submenu.icon} />
+        ) : (
+          React.createElement(submenu.icon, { width: '24px' })
+        )}
         {submenu.name}
       </span>
     }
@@ -33,8 +38,14 @@ const createSubMenu = submenu => (
 
 const submenus = [
   {
+    name: '遠端數據',
+    key: 'sidebar_remote_data_menu',
+    icon: MeterIcon,
+    items: monitorRouters,
+  },
+  {
     name: '系統設定',
-    key: 10000,
+    key: 'sidebar_system_settings',
     icon: 'setting',
     items: deviceSettingsRoutes,
   },

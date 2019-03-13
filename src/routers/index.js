@@ -3,7 +3,9 @@ import { Route, Redirect } from 'react-router-dom';
 import Login from '../components/forms/Login';
 import Test from '../components/Test';
 import { deviceSettingsRoutes } from './SettingsRouter';
+import { monitorRouters } from './monitorRouter';
 export { deviceSettingsRoutes } from './SettingsRouter';
+export * from './monitorRouter';
 export { MobileRouters } from './mobileRouter';
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,8 +21,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   //   },
   // };
 };
-
-const makeRoute = () => {};
 
 const rootRoutes = [
   {
@@ -73,6 +73,15 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 export const makeSettingsRouters = deviceSettingsRoutes.map(item => (
+  <PrivateRoute
+    path={item.to}
+    component={item.component}
+    to={item.to}
+    key={item.key.toString()}
+  />
+));
+
+export const makeMonitorRouters = monitorRouters.map(item => (
   <PrivateRoute
     path={item.to}
     component={item.component}
