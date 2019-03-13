@@ -101,7 +101,7 @@ apiRouter.get(
   }
 );
 
-apiRouter.delete('/api/devices/delete', async ctx => {
+apiRouter.post('/api/devices/delete', async ctx => {
   console.log('delete request ', ctx.request.body);
   const keys = ctx.request.body;
   try {
@@ -112,7 +112,7 @@ apiRouter.delete('/api/devices/delete', async ctx => {
   }
 });
 
-apiRouter.delete('/api/remove/:collection', async (ctx, next) => {
+apiRouter.post('/api/remove/:collection', async (ctx, next) => {
   const collection = ctx.params.collection;
   if (!collection) {
     ctx.response.status = 404;

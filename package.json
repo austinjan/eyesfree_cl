@@ -41,4 +41,5 @@
     "prettier": "^1.16.4"
   },
   "proxy": "http://localhost:3001"
+  
 }

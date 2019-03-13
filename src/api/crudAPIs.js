@@ -45,7 +45,7 @@ export const apiUpdate = async (key, newItem, collection) => {
 
 export const apiRemove = async (keys, collection) => {
   const response = await fetch(`/api/remove/${collection}`, {
-    method: 'DELETE',
+    method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',

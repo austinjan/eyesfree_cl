@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'antd';
-import TableToolBar from '../../components/settings/TableToolBar';
+import TableToolBar from './TableToolBar';
 import {
   EditableCell,
   EditableFormRow,

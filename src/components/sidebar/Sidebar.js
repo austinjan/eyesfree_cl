@@ -22,7 +22,7 @@ const createSubMenu = submenu => (
         {typeof submenu.icon === 'string' ? (
           <Icon type={submenu.icon} />
         ) : (
-          React.createElement(submenu.icon, { width: '24px' })
+          React.createElement(submenu.icon)
         )}
         {submenu.name}
       </span>

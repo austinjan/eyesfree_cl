@@ -1,12 +1,11 @@
 import React from 'react';
 import { Table } from 'antd';
-import TableToolBar from '../../components/settings/TableToolBar';
+import TableToolBar from './TableToolBar';
 import {
   EditableCell,
   EditableFormRow,
   EditOperationCell,
 } from '../../components/settings/EditableCell';
-import SensorTable from './SensorTable';
 import './tableStyle.css';
 import ConnectSensorTable from './SensorTable';
 
