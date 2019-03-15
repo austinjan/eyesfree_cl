@@ -2,6 +2,7 @@ const koa = require('koa');
 const apiRouter = require('./router/apiRouter');
 const fileRouter = require('./router/fileRouter');
 const koaBody = require('koa-body');
+const mosca = require('mosca');
 const app = new koa();
 // const fs = require('fs');
 

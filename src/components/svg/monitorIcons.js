@@ -7,7 +7,7 @@ export const MeterSvg = ({ props }) => {
   return (
     <svg
       t="1552444883468"
-      class="icon"
+      className="icon"
       viewBox="0 0 1024 1024"
       p-id="4837"
       width={width}

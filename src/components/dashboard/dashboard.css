@@ -1,0 +1,16 @@
+.testContainer {
+  display: flex;
+}
+
+.testContainer > div {
+  padding: 10px 20px;
+}
+
+.testGaugeSettingCard {
+  display: flex;
+  flex-direction: column;
+}
+
+p {
+  margin: 5px;
+}
