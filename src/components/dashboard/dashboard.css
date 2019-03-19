@@ -2,13 +2,11 @@
   display: flex;
 }
 
+.testGauge {
+  margin: auto;
+}
 .testContainer > div {
   padding: 10px 20px;
-}
-
-.testGaugeSettingCard {
-  display: flex;
-  flex-direction: column;
 }
 
 p {

@@ -1,7 +1,9 @@
 import React, { Component, useState } from 'react';
 // import * as d3 from 'd3';
 import ReactSpeedometer from 'react-d3-speedometer';
-import { Card, Slider, InputNumber, Switch } from 'antd';
+import { Card } from 'antd';
+import GaugeApperanceFrom from '../forms/GaugeApperanceForm';
+import * as lo from 'lodash';
 import './dashboard.css';
 
 class TestComponent extends Component {
@@ -14,13 +16,14 @@ class TestComponent extends Component {
       width: 200,
       height: 150,
       fluidWidth: false,
+      forceRender: true,
       needleColor: 'black',
       startColor: '#00ffff',
       endColor: '#000099',
       needleTransitionDuration: 500,
       neddleHeightRatio: 0.9,
       ringWidth: 60,
-      tetColor: 'black',
+      textColor: 'black',
       currentValueText: '${value}',
       style: { padding: '20px 10px' },
     },
@@ -33,13 +36,13 @@ class TestComponent extends Component {
     }));
   };
 
-  handleGaugePropsChanged = (value, prop) => {
+  handleGaugePropsChanged = changedFields => {
     this.setState(preState => {
-      if (value === undefined || value === null) {
-        return;
-      }
       const newState = { ...preState };
-      newState.gaugeProps[prop] = value;
+      lo.forEach(changedFields, obj => {
+        newState.gaugeProps[obj.name] = obj.value;
+      });
+
       return newState;
     });
   };
@@ -59,105 +62,17 @@ class TestComponent extends Component {
         <div className="testGauge">
           <ReactSpeedometer {...gaugeProps} style={{ padding: '20px' }} />
         </div>
-        <div className="testSettingBoard" style={{ flex: 1 }}>
-          <Card
-            size="small"
-            title="Gauge settings"
-            className="testGaugeSettingCard"
-          >
-            <Switch
-              checkedChildren="refresh"
-              unCheckedChildren="frezz"
-              onChange={this.handleGaugeRnder}
+        <div style={{ flex: 2 }}>
+          <Card size="small" title="Gauge settings" style={{ maxWidth: 600 }}>
+            <GaugeApperanceFrom
+              gaugeSettings={{ ...gaugeProps }}
+              onFieldChanged={this.handleGaugePropsChanged}
             />
-            <div
-              className="settingValue"
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              <p>Value: </p>
-              <Slider
-                min={gaugeProps.minValue}
-                max={gaugeProps.maxValue}
-                value={gaugeProps.value}
-                style={{ marginLeft: 16, flex: 1 }}
-                onChange={this.handleValueChanged}
-              />
-              <InputNumber
-                min={gaugeProps.minValue}
-                max={gaugeProps.maxValue}
-                value={gaugeProps.value}
-                style={{ marginLeft: 8 }}
-                onChange={this.handleValueChanged}
-              />
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <p>Min: </p>
-              <InputNumber
-                value={gaugeProps.minValue}
-                style={{ marginLeft: 8 }}
-                onChange={v => this.handleGaugePropsChanged(v, 'minValue')}
-              />
-              <p>Max: </p>
-              <InputNumber
-                value={gaugeProps.maxValue}
-                style={{ marginLeft: 8 }}
-                onChange={v => this.handleGaugePropsChanged(v, 'maxValue')}
-              />
-            </div>
-            <div style={{ display: 'flex' }}>
-              <p>Segment: </p>
-              <InputNumber
-                min={1}
-                value={gaugeProps.segments}
-                style={{ marginLeft: 8 }}
-                onChange={v => this.handleGaugePropsChanged(v, 'segments')}
-              />
-            </div>
-            <div style={{ display: 'flex' }}>
-              <p>Ring width: </p>
-              <Slider
-                min={10}
-                max={gaugeProps.height}
-                value={gaugeProps.ringWidth}
-                style={{ marginLeft: 16, flex: 1 }}
-                onChange={v => this.handleGaugePropsChanged(v, 'ringWidth')}
-              />
-            </div>
           </Card>
         </div>
       </div>
     );
   }
 }
-
-// class BarChart extends Component {
-//   componentDidMount() {
-//     this.drawChart();
-//   }
-
-//   drawChart = () => {
-//     const data = [12, 5, 6, 6, 9, 10];
-//     const svg = d3
-//       .select('#TestD3')
-//       .append('svg')
-//       .attr('width', 700)
-//       .attr('height', 300)
-//       .style('margin-left', 50);
-//     svg
-//       .selectAll('rect')
-//       .data(data)
-//       .enter()
-//       .append('rect')
-//       .attr('x', (d, i) => i * 70)
-//       .attr('y', (d, i) => 300 - 10 * d)
-//       .attr('width', 65)
-//       .attr('height', (d, i) => d * 10)
-//       .attr('fill', '#e44');
-//   };
-
-//   render() {
-//     return <div id="TestD3" />;
-//   }
-// }
 
 export default TestComponent;

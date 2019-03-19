@@ -1,7 +1,6 @@
 import React from 'react';
 import TestD3 from '../components/dashboard/TestD3';
 
-
 export const monitorRouters = [
   {
     key: 'monitorRouters_all_devices',
@@ -10,7 +9,7 @@ export const monitorRouters = [
     icon: 'setting',
     component: () => (
       <div>
-        <p>All Devices</p>
+        <h1> All Devices </h1>
       </div>
     ),
   },

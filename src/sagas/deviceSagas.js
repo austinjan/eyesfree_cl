@@ -53,7 +53,7 @@ export function* removeDevicesSaga(action) {
 }
 
 export function* watchDevices() {
-  yield console.log('Saga ganerator function watchInitDevices ....');
+  // yield console.log('Saga ganerator function watchInitDevices ....');
   yield takeEvery(INIT_DEVICES, getDevicesSaga);
   yield takeEvery(API_ADD_DEVICE, addDevicesSaga);
   yield takeEvery(FETCH_UPDATE_DEVICE, updateDevicesSaga);
