@@ -6,6 +6,7 @@ import {
   EditableFormRow,
   EditOperationCell,
 } from '../../components/settings/EditableCell';
+import { apiScanDevice } from '../../api';
 import './tableStyle.css';
 import ConnectSensorTable from './SensorTable';
 
@@ -115,6 +116,14 @@ class DevicesTable extends React.Component {
 
   handleSensorChanged = (sensors, key) => {};
 
+  scanDevices = () => {
+    try {
+      apiScanDevice();
+    } catch (err) {
+      console.log('handleSensorChanged err: ', err);
+    }
+  };
+
   render() {
     const { data } = this.props;
     const { selectedRowKeys } = this.state;
@@ -145,6 +154,7 @@ class DevicesTable extends React.Component {
           handlers={{
             addItem: this.addDefaultDevice,
             removeSelectedItems: this.removeSelectedDevcies,
+            scanDevices: this.scanDevices,
           }}
           componentsText={{
             add: '新增裝置',

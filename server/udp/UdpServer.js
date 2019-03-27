@@ -2,6 +2,44 @@ const dgram = require('dgram');
 
 const UDP_SERVER_PORT = 0xda92;
 
+// ip example: 192.168.2.1
+function inet_aton(ip) {
+  // split into octets
+  var a = ip.split('.');
+  var buffer = Buffer.alloc(4);
+  
+  for (var i = 0; i < 4; i++) {
+    buffer.writeUInt8(a[i],i);
+  }
+  return (buffer.readUInt32LE(0));
+}
+
+// num example: 3232236033
+function inet_ntoa(num) {
+  var nbuffer = new ArrayBuffer(4);
+  var ndv = new DataView(nbuffer);
+  ndv.setUint32(0, num);
+
+  var a = new Array();
+  for (var i = 0; i < 4; i++) {
+    a[i] = ndv.getUint8(i);
+  }
+  return a.join('.');
+}
+const makePackage = option => {
+  const { command, dataSize, data } = option;
+  const pck = Buffer.alloc(8 + dataSize, 0);
+  const sendCommand = command | 0x0abc0000;
+  console.log('.........', sendCommand.toString(16));
+  pck.writeUInt32LE(sendCommand);
+  pck.writeUInt32LE(dataSize, 4);
+  console.log('makePackage = ', pck);
+  if (data.length > 0) {
+    data.copy(pck, 8, 0, data.length);
+  }
+  return pck;
+};
+
 let instance = null;
 
 class UdpServer {
@@ -9,7 +47,7 @@ class UdpServer {
     if (!instance) {
       instance = this;
     }
-    this.socket = dgram.createSocket('udp4');
+    this.socket = dgram.createSocket({ type: 'udp4', reuseAddr: true });
 
     this.socket.bind({ port: UDP_SERVER_PORT }, () => {
       this.socket.setBroadcast(true);
@@ -42,8 +80,19 @@ class UdpServer {
     });
   }
 
-  send() {
-    this.socket.send();
+  sendHello() {
+    const buffer = makePackage({
+      command: 0x00000001,
+      dataSize: 0,
+      data: Buffer.alloc(0),
+    });
+    this.socket.send(
+      buffer,
+      0,
+      buffer.length,
+      UDP_SERVER_PORT,
+      '255.255.255.255'
+    );
   }
 }
 

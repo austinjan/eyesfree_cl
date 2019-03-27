@@ -1,6 +1,7 @@
 const koa = require('koa');
 const apiRouter = require('./router/apiRouter');
 const fileRouter = require('./router/fileRouter');
+const devicesRouter = require('./router/devicesRouter');
 const koaBody = require('koa-body');
 const UdpServer = require('./udp/UdpServer');
 const mosca = require('mosca');
@@ -21,6 +22,7 @@ app.use(
 
 app.use(fileRouter.routes());
 app.use(apiRouter.routes());
+app.use(devicesRouter.routes());
 
 app.listen(3001, () => {
   console.log('Server running on https://localhost:3001');

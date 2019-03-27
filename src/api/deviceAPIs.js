@@ -23,3 +23,10 @@ export const apiRemoveDevice = async keys => {
   const ret = await apiRemove(keys, 'devices');
   return ret;
 };
+
+export const apiScanDevice = async () => {
+  const response = await fetch(`/api/devices/scan`);
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+};

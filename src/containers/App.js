@@ -12,8 +12,6 @@ import { initDevices, fetchAllUser } from '../actions';
 
 import './App.css';
 
-require('dotenv').load();
-
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const { Header, Footer, Sider, Content } = Layout;

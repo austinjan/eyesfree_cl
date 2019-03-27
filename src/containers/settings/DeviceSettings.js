@@ -13,6 +13,7 @@ import DevicesTable from './DevicesTable';
 // action: scan
 // action: add device
 class DeviceSettings extends React.Component {
+
   render() {
     const { addDevice, updateDevice, removeDevices, data } = this.props;
     return (

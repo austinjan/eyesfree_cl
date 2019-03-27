@@ -5,9 +5,14 @@ const fileRouter = router();
 module.exports = fileRouter;
 
 fileRouter.post('/api/upload', async ctx => {
+  try{
   console.log('Upload file ', ctx.request.body);
-  ctx.response.status = 400;
-  ctx.response.message = 'test';
+  ctx.response.status = 200;
+  } catch (err) {
+    ctx.response.status = 400;
+    ctx.response.message = 'test';
+  }
+
   // try {
   //   await db.client.collection('devices').deleteMany({ key: { $in: keys } });
   // } catch (err) {
