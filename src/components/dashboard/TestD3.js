@@ -7,6 +7,10 @@ import * as lo from 'lodash';
 import './dashboard.css';
 
 class TestComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.ws = {};
+  }
   state = {
     gaugeProps: {
       value: 0,
@@ -27,7 +31,42 @@ class TestComponent extends Component {
       currentValueText: '${value}',
       style: { padding: '20px 10px' },
     },
+    timestamp: 'Waiting response',
   };
+
+  handleWsMessage = message => {
+    this.setState(preState => ({
+      ...preState,
+      timestamp: message,
+    }));
+  };
+
+  componentDidMount() {
+    this.ws = new WebSocket('ws://localhost:3001/ws');
+
+    this.ws.onopen = evt => {
+      console.log('Connecttion open');
+      let sendMsg = {
+        name: 'austin',
+        age: 17,
+        sensors: [{ name: 'di', type: 'bit' }, { name: 'do', type: 'bit' }],
+      };
+      this.ws.send(JSON.stringify(sendMsg));
+    };
+
+    this.ws.onmessage = evt => {
+      this.handleWsMessage(evt.data);
+    };
+
+    this.ws.onclose = evt => {
+      console.log('Connection closed.');
+    };
+  }
+
+  componentWillUnmount() {
+    console.log('unmount !!');
+    this.ws.close();
+  }
 
   handleGaugeRnder = checked => {
     this.setState(preState => ({
@@ -59,6 +98,7 @@ class TestComponent extends Component {
     const { gaugeProps } = this.state;
     return (
       <div className="testContainer">
+        <p>This is the timer value: {this.state.timestamp}</p>
         <div className="testGauge">
           <ReactSpeedometer {...gaugeProps} style={{ padding: '20px' }} />
         </div>
