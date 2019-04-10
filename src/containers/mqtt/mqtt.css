@@ -1,0 +1,15 @@
+.settings-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-flex-row {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 10px;
+}
+
+/* flex item aligment right */
+.aligment-right {
+  margin-left: auto;
+}

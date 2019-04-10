@@ -1,6 +1,6 @@
 import React from 'react';
 import TestD3 from '../components/dashboard/TestD3';
-
+import MqttSettings from '../containers/mqtt/MqttSettings';
 export const monitorRouters = [
   {
     key: 'monitorRouters_all_devices',
@@ -30,5 +30,12 @@ export const monitorRouters = [
     to: '/monitorTest',
     icon: 'check',
     component: TestD3,
+  },
+  {
+    key: 'monitorRouters_mqtt',
+    name: 'Mqtt Settings',
+    to: '/mqttsettings',
+    icon: 'check',
+    component: MqttSettings,
   },
 ];
