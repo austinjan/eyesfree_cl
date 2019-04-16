@@ -1,9 +1,9 @@
-.settings-container {
+.mqtt-container {
   display: flex;
   flex-direction: column;
 }
 
-.settings-flex-row {
+.mqtt-flex-row {
   display: flex;
   flex-direction: row;
   padding: 5px 10px;
