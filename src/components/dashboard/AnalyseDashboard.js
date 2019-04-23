@@ -7,3 +7,5 @@ const analyseDashboard = props => {
     </div>
   );
 };
+
+export default analyseDashboard;

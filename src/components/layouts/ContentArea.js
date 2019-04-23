@@ -5,7 +5,7 @@ import {
   makeSettingsRouters,
   makeMonitorRouters,
   MobileRouters,
-} from '../../routers';
+} from 'Routers';
 
 const contentArea = () => {
   return (

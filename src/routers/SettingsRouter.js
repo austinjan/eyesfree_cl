@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DeviceSettings, UserSettings } from '../containers/settings';
+import { DeviceSettings, UserSettings } from 'Components/settings';
 
 export const deviceSettingsRoutes = [
   {

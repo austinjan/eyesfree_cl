@@ -1,38 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Table } from 'antd';
 import TableToolBar from './TableToolBar';
 import {
   EditableCell,
   EditableFormRow,
   EditOperationCell,
-} from '../../components/settings/EditableCell';
+} from './EditableCell';
+import { apiScanDevice } from '../../api';
 import './tableStyle.css';
+import ConnectSensorTable from './SensorTable';
 
 let uniqueKey = function() {
   return (
-    'user-' +
+    'dev-' +
     Math.random()
       .toString(36)
       .substr(2, 16)
   );
 };
 
-class UsersTable extends React.Component {
-  static propTypes = {
-    data: PropTypes.array.isRequired,
-  };
-
+class DevicesTable extends React.Component {
   state = {
     modifyItems: {},
     editingkey: '',
     selectedRowKeys: [],
+    scaning: false,
   };
 
   isEditing = key => key === this.state.editingkey;
 
   save = (form, key) => {
-    const { updateUser } = this.props;
+    const { updateDevice } = this.props;
 
     form.validateFields((err, row) => {
       if (err) {
@@ -40,7 +38,7 @@ class UsersTable extends React.Component {
       }
 
       this.setState({ editingkey: '' });
-      updateUser(key, row);
+      updateDevice(key, row);
     });
   };
 
@@ -48,14 +46,14 @@ class UsersTable extends React.Component {
     this.setState({ editingkey: key });
   };
 
-  addDefaultUser = () => {
-    const { addUser } = this.props;
-    const key = uniqueKey();
-    addUser({
-      key: key,
-      name: '輸入名稱',
-      email: '請輸入電子郵件',
-      password: '請輸入密碼',
+  addDefaultDevice = () => {
+    const { addDevice } = this.props;
+
+    addDevice({
+      key: uniqueKey(),
+      ip: '172.0.0.1',
+      name: 'Device Name',
+      sensors: [],
     });
   };
 
@@ -67,10 +65,22 @@ class UsersTable extends React.Component {
       editable: true,
     },
     {
-      title: 'E-mail',
-      dataIndex: 'email',
-      key: 'email',
+      title: 'IP',
+      dataIndex: 'ip',
+      key: 'ip',
       editable: true,
+    },
+    {
+      title: '管理人員',
+      key: 'management',
+      render: (text, record) => <span>大蔡</span>,
+      editable: false,
+    },
+    {
+      title: '供應商',
+      key: 'provider',
+      render: (text, record) => <span>小蔡</span>,
+      editable: false,
     },
     {
       title: 'Action',
@@ -94,10 +104,10 @@ class UsersTable extends React.Component {
     },
   ];
 
-  removeSelectedUsers = () => {
-    const { removeUsers } = this.props;
+  removeSelectedDevcies = () => {
+    const { removeDevices } = this.props;
     const { selectedRowKeys } = this.state;
-    removeUsers(selectedRowKeys);
+    removeDevices(selectedRowKeys);
   };
 
   onSelectChange = selectedRowKeys => {
@@ -106,8 +116,16 @@ class UsersTable extends React.Component {
 
   handleSensorChanged = (sensors, key) => {};
 
+  scanDevices = () => {
+    try {
+      apiScanDevice();
+    } catch (err) {
+      console.log('handleSensorChanged err: ', err);
+    }
+  };
+
   render() {
-    const { data, searchUser } = this.props;
+    const { data } = this.props;
     const { selectedRowKeys } = this.state;
 
     const rowSelection = {
@@ -134,25 +152,32 @@ class UsersTable extends React.Component {
       <div>
         <TableToolBar
           handlers={{
-            addItem: this.addDefaultUser,
-            removeSelectedItems: this.removeSelectedUsers,
-            onSearch: searchUser,
+            addItem: this.addDefaultDevice,
+            removeSelectedItems: this.removeSelectedDevcies,
+            scanDevices: this.scanDevices,
           }}
           componentsText={{
-            add: '新增使用者',
-            remove: '移除選取使用者',
+            add: '新增裝置',
+            remove: '移除選取裝置',
+            scan: '掃描網域裝置',
           }}
         />
 
         <Table
           rowSelection={rowSelection}
           columns={columns}
-          dataSource={data}
+          dataSource={data.devices}
           components={{ body: { cell: EditableCell, row: EditableFormRow } }}
+          expandedRowRender={(record, idex, indent, expaned) => (
+            <ConnectSensorTable
+              sensors={record.sensors}
+              recordKey={record.key}
+            />
+          )}
         />
       </div>
     );
   }
 }
 
-export default UsersTable;
+export default DevicesTable;

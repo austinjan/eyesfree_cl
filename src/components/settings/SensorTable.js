@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SensorForm from '../../components/forms/SensorForm';
+import SensorForm from '../forms/SensorForm';
 import each from 'lodash/each';
 import findIndex from 'lodash/findIndex';
 import cloneDeep from 'lodash/cloneDeep';
