@@ -1,14 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Spin } from 'antd';
 import MqttBrokerForm from '../../components/forms/MqttBrokerForm';
+import { createCrudUrl } from '../../api/crudAPIs';
 import MqttStatus from './MqttStatus';
-import './mqtt.css';
+import styles from './mqtt.less';
 
 // react component mqttSettings
 const mqttSettings = props => {
   const [mqttStatus, setMqttStatus] = useState('loading');
   const [fetchError, setFetchError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [mqttBrokerSettings, setMqttBrokerSettings] = useState({
+    Host: 'test.mosquitto.com',
+    Port: 8080,
+    ClientID: 'remoteIO',
+  });
+
+  // Get backend server's mqtt settings (server is subscribe of mqtt role)
+  async function fetchMqttSettings() {
+    try {
+      setLoading(true);
+      const response = await fetch(`/apis/v1/mqttsettings`);
+      setLoading(false);
+      if (!response.ok) {
+        setFetchError('Server error: ' + response.statusText);
+        return;
+      }
+      const data = await response.json();
+      if (data) {
+        Array.isArray(data)
+          ? setMqttBrokerSettings(data[0])
+          : setMqttBrokerSettings(data);
+      }
+    } catch (err) {
+      setFetchError(err.message);
+    }
+    setFetchError('');
+  }
 
   async function fetchMqttStatus() {
     try {
@@ -31,6 +59,13 @@ const mqttSettings = props => {
   async function fetchMqttReconnect() {
     try {
       setLoading(true);
+      await fetch(`/apis/v1/mqttsettings`, {
+        body: JSON.stringify(mqttBrokerSettings),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       const response = await fetch(`/api/mqtt/reconnect`);
       setLoading(false);
       if (!response.ok) {
@@ -46,12 +81,17 @@ const mqttSettings = props => {
     setFetchError('');
   }
 
+  const handleFormFieldChanged = changedFields => {
+    let newSettints = Object.assign(mqttBrokerSettings, changedFields);
+    setMqttBrokerSettings(newSettints);
+  };
   const handleReconnect = e => {
     fetchMqttReconnect();
   };
 
   const handleRefresh = e => {
     fetchMqttStatus();
+    fetchMqttSettings();
   };
 
   const alertClose = e => {
@@ -60,12 +100,13 @@ const mqttSettings = props => {
 
   useEffect(() => {
     fetchMqttStatus();
+    fetchMqttSettings();
   }, []);
 
   let mqttStatusElm;
   if (mqttStatus === 'loading') {
     mqttStatusElm = (
-      <div className="settings-flex-row">
+      <div className={styles.mqttFlexRow}>
         <Spin />
         <h4 style={{ marginLeft: '4px' }}>Loading mqtt connection status...</h4>
       </div>
@@ -81,7 +122,7 @@ const mqttSettings = props => {
     );
   }
   return (
-    <div className="settings-container">
+    <div className={styles.mqttContainer}>
       {fetchError !== '' ? (
         <Alert
           message={fetchError}
@@ -93,7 +134,8 @@ const mqttSettings = props => {
       ) : null}
       {mqttStatusElm}
       <MqttBrokerForm
-        formSettings={{ Host: 'ws://test.mosquitto.com:8080', KeepAlive: 60 }}
+        formSettings={mqttBrokerSettings}
+        onFieldChanged={handleFormFieldChanged}
       />
     </div>
   );

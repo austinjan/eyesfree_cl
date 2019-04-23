@@ -3,6 +3,17 @@ import TestD3 from '../components/dashboard/TestD3';
 import MqttSettings from '../containers/mqtt/MqttSettings';
 export const monitorRouters = [
   {
+    key: 'monitorRouters_analyse',
+    name: 'Analyse',
+    to: '/analyseDashboard',
+    icon: 'dashboard',
+    component: () => (
+      <div>
+        <h1> All Devices </h1>
+      </div>
+    ),
+  },
+  {
     key: 'monitorRouters_all_devices',
     name: 'All Devices',
     to: '/monitorAll',

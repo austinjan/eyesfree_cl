@@ -1,10 +1,12 @@
 import React, { Component, useState } from 'react';
 // import * as d3 from 'd3';
 import ReactSpeedometer from 'react-d3-speedometer';
-import { Card } from 'antd';
+import { Card, Tooltip, Icon } from 'antd';
 import GaugeApperanceFrom from '../forms/GaugeApperanceForm';
+import { ChartCard, MiniBar } from 'ant-design-pro/lib/Charts';
 import * as lo from 'lodash';
 import './dashboard.css';
+import 'ant-design-pro/dist/ant-design-pro.css';
 
 class TestComponent extends Component {
   constructor(props) {
@@ -100,7 +102,17 @@ class TestComponent extends Component {
       <div className="testContainer">
         <p>This is the timer value: {this.state.timestamp}</p>
         <div className="testGauge">
-          <ReactSpeedometer {...gaugeProps} style={{ padding: '20px' }} />
+          <ChartCard
+            title="test"
+            action={
+              <Tooltip title="test-aaa">
+                <Icon type="exclamation-circle-o" />
+              </Tooltip>
+            }
+            total="5,400"
+            contentHeight={46}
+          />
+          <ReactSpeedometer {...gaugeProps} />
         </div>
         <div style={{ flex: 2 }}>
           <Card size="small" title="Gauge settings" style={{ maxWidth: 600 }}>

@@ -60,3 +60,13 @@ export const apiRemove = async (keys, collection) => {
   console.log('const apiRemove ret=', ret);
   return ret;
 };
+
+// Standard CRUD API (method: GET,PUT,PATCH,DELETE,POST)
+export const createCrudUrl = (collection, query) => {
+  let crudUrl = `/apis/v1/${collection}`;
+  let searchParams = new URLSearchParams(query);
+  console.log(`url query: ${searchParams}`);
+  crudUrl = `${crudUrl}?${searchParams}`;
+  console.log(`url created: ${crudUrl}`);
+  return crudUrl;
+};
