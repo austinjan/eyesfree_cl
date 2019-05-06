@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Form, Input, InputNumber } from 'antd';
 import './normalFormStyle.css';
 
+// 處理連接 broker 相關設定
 const mqttBrokerForm = props => {
-  const { form, brokerSettings } = props;
+  const { form } = props;
   const { getFieldDecorator } = form;
 
   const handleSubmit = e => {
     e.preventDefault();
+    form.validateFields((err, values) => {
+      if (!err) {
+      }
+    });
     // console.log();
   };
 
   return (
     <div className="form-container">
+      <h3>Broker settings</h3>
       <Form onSubmit={handleSubmit}>
         <div className="form-row">
           <Form.Item label="Host" className="large-item">
-            {getFieldDecorator('Host', {})(<Input />)}
+            {getFieldDecorator('Host', {})(
+              <Input placeholder="ws://test.mosquitto.com" />
+            )}
           </Form.Item>
           <Form.Item label="Port" className="small-item">
             {getFieldDecorator('Port', {})(<Input />)}
@@ -56,9 +64,12 @@ export default Form.create({
   mapPropsToFields(props) {
     const retObj = {};
     const { formSettings } = props;
-    Object.keys(formSettings).map(
-      key => (retObj[key] = mapProp2Field(formSettings[key]))
-    );
+    if (formSettings) {
+      Object.keys(formSettings).map(key => {
+        if (key != 'subscribs') retObj[key] = mapProp2Field(formSettings[key]);
+      });
+    }
+
     return retObj;
   },
   onValuesChange(_, changedValues, allValues) {

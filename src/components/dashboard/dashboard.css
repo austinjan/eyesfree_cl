@@ -3,7 +3,7 @@
 }
 
 .testGauge {
-  margin: auto;
+  display: flex;
 }
 .testContainer > div {
   padding: 10px 20px;

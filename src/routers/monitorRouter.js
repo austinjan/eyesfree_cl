@@ -1,7 +1,8 @@
 import React from 'react';
 import TestD3 from 'Components/dashboard/TestD3';
 import MqttSettings from 'Components/mqtt/MqttSettings';
-import { AnalyseDashboard } from '~/components/dashboard';
+import MqttRecords from 'Components/mqtt/MqttRecords';
+import { AnalyseDashboard } from 'Components/dashboard';
 
 export const monitorRouters = [
   {
@@ -9,18 +10,18 @@ export const monitorRouters = [
     name: 'Analyse',
     to: '/analyseDashboard',
     icon: 'dashboard',
-    component: () => (
-      <div>
-        <h1> All Devices </h1>
-      </div>
-    ),
+    component: AnalyseDashboard,
   },
   {
     key: 'monitorRouters_all_devices',
     name: 'All Devices',
     to: '/monitorAll',
     icon: 'setting',
-    component: AnalyseDashboard,
+    component: () => (
+      <div>
+        <h1> All Devices </h1>
+      </div>
+    ),
   },
   {
     key: 'monitorRouters_setting_display_layout',
@@ -46,5 +47,12 @@ export const monitorRouters = [
     to: '/mqttsettings',
     icon: 'check',
     component: MqttSettings,
+  },
+  {
+    key: 'monitorRouters_mqtt_records',
+    name: 'Mqtt records',
+    to: '/mqttrecords',
+    icon: 'check',
+    component: MqttRecords,
   },
 ];

@@ -24,19 +24,32 @@ const store = createStore(
 sagaMiddleware.run(rootSagas);
 
 class App extends Component {
+  state = {
+    collapsed: false, // sidebar collapsed state
+  };
   componentDidMount() {
     store.dispatch(initDevices());
     store.dispatch(fetchAllUser());
   }
 
+  onCollapse = collapsed => {
+    this.setState({ collapsed });
+  };
+
   render() {
+    const { collapsed } = this.state;
     return (
       <Provider store={store}>
         <Router className="App">
           <Layout>
             <Header>Header</Header>
             <Layout>
-              <Sider className="side">
+              <Sider
+                className="side"
+                collapsible
+                onCollapse={this.onCollapse}
+                collapsed={collapsed}
+              >
                 <Sidebar />
               </Sider>
               <Content>

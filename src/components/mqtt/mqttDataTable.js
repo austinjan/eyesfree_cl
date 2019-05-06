@@ -43,7 +43,6 @@ const mqttDataTable = props => {
         return;
       }
       const data = await response.json();
-      console.log(data);
     } catch (e) {
       setFetchError(e.message);
     }
@@ -60,7 +59,6 @@ const mqttDataTable = props => {
         return;
       }
       const data = await response.json();
-      console.log(data);
     } catch (e) {
       setFetchError(e.message);
     }

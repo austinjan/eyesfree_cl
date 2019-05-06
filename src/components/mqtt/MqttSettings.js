@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Spin } from 'antd';
-import MqttBrokerForm from '../../components/forms/MqttBrokerForm';
-import { createCrudUrl } from '../../api/crudAPIs';
+import MqttBrokerForm from 'Components/forms/MqttBrokerForm';
+import MqttSubscribeForm from 'Components/forms/MqttSubscribeForm';
+// import { createCrudUrl } from '../../api/crudAPIs';
 import MqttStatus from './MqttStatus';
-import styles from './mqtt.less';
+import styles from './mqtt.module.less';
+import * as _ from 'lodash';
 
 // react component mqttSettings
 const mqttSettings = props => {
@@ -11,11 +13,20 @@ const mqttSettings = props => {
   const [fetchError, setFetchError] = useState('');
   const [loading, setLoading] = useState(false);
   const [mqttBrokerSettings, setMqttBrokerSettings] = useState({
+    key: 'default-mqtt-broker-settings',
     Host: 'test.mosquitto.com',
     Port: 8080,
     ClientID: 'remoteIO',
+    Username: '',
+    Password: '',
+    KeepAlive: 10,
   });
+  const [subscribes, setSubscribes] = useState([]);
 
+  useEffect(() => {
+    fetchMqttStatus();
+    fetchMqttSettings();
+  }, []);
   // Get backend server's mqtt settings (server is subscribe of mqtt role)
   async function fetchMqttSettings() {
     try {
@@ -28,14 +39,23 @@ const mqttSettings = props => {
       }
       const data = await response.json();
       if (data) {
-        Array.isArray(data)
-          ? setMqttBrokerSettings(data[0])
-          : setMqttBrokerSettings(data);
+        let dataBroker = {};
+        let dataSubcribe = [];
+        if (Array.isArray(data)) {
+          dataBroker = data[0] || {};
+          dataSubcribe = data[0].subscribes || [];
+        } else {
+          dataBroker = data || {};
+          dataSubcribe = data.subscribes || [];
+        }
+        console.log('fetchMqttSettings ', dataSubcribe);
+        setMqttBrokerSettings(dataBroker);
+        setSubscribes(dataSubcribe);
       }
+      setFetchError('');
     } catch (err) {
       setFetchError(err.message);
     }
-    setFetchError('');
   }
 
   async function fetchMqttStatus() {
@@ -59,10 +79,12 @@ const mqttSettings = props => {
   async function fetchMqttReconnect() {
     try {
       setLoading(true);
+      const bodydata = { ...mqttBrokerSettings, subscribes: [...subscribes] };
       await fetch(`/apis/v1/mqttsettings`, {
-        body: JSON.stringify(mqttBrokerSettings),
-        method: 'POST',
+        body: JSON.stringify(bodydata),
+        method: 'PUT',
         headers: {
+          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
       });
@@ -82,8 +104,11 @@ const mqttSettings = props => {
   }
 
   const handleFormFieldChanged = changedFields => {
-    let newSettints = Object.assign(mqttBrokerSettings, changedFields);
-    setMqttBrokerSettings(newSettints);
+    const newState = { ...mqttBrokerSettings };
+    _.forEach(changedFields, obj => {
+      newState[obj.name] = obj.value;
+    });
+    setMqttBrokerSettings(newState);
   };
   const handleReconnect = e => {
     fetchMqttReconnect();
@@ -98,10 +123,21 @@ const mqttSettings = props => {
     setFetchError('');
   };
 
-  useEffect(() => {
-    fetchMqttStatus();
-    fetchMqttSettings();
-  }, []);
+  const handleAddSubscribe = v => {
+    subscribes.push(v);
+    console.log('mqttsetting.js handleAddSubscribe ', v, subscribes);
+    setSubscribes(subscribes);
+  };
+
+  const handleRemoveSubscribe = v => {
+    let arr = [...subscribes];
+    const index = _.findIndex(arr, { key: v });
+    if (index >= 0) {
+      _.pullAt(arr, [index]);
+      console.log('mqttsetting.js handleRemoveSubscribe >>>> ', arr);
+      setSubscribes(arr);
+    }
+  };
 
   let mqttStatusElm;
   if (mqttStatus === 'loading') {
@@ -132,10 +168,17 @@ const mqttSettings = props => {
           onClose={alertClose}
         />
       ) : null}
+
       {mqttStatusElm}
       <MqttBrokerForm
         formSettings={mqttBrokerSettings}
         onFieldChanged={handleFormFieldChanged}
+      />
+
+      <MqttSubscribeForm
+        subscribes={subscribes}
+        handleAddSubscribe={handleAddSubscribe}
+        handleRemoveSubscribe={handleRemoveSubscribe}
       />
     </div>
   );

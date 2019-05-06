@@ -5,7 +5,8 @@ const {
   addWebpackAlias
 } = require("customize-cra");
 var path = require("path");
-const rewireLess = require("react-app-rewire-less");
+//const rewireStyl = require("react-app-rewire-stylus-modules");
+
 module.exports = override(
   fixBabelImports("import", {
     libraryName: "antd",
@@ -27,4 +28,5 @@ module.exports = override(
     Routers: path.resolve(__dirname, "src/routers"),
     "~": path.resolve(__dirname, "src")
   })
+  //rewireStyl
 );

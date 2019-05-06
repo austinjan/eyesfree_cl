@@ -2,8 +2,8 @@ import React from 'react';
 import { Icon } from 'antd';
 
 export const MeterSvg = ({ props }) => {
-  const width = (props && props.width) || '12px';
-  const height = (props && props.height) || '12px';
+  const width = (props && props.width) || '14px';
+  const height = (props && props.height) || '14px';
   return (
     <svg
       t="1552444883468"

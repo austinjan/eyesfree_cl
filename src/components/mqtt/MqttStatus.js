@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Icon } from 'antd';
 import PropTypes from 'prop-types';
-
+import styles from './mqtt.module.less';
 // React component mqttStatus
 // props:
 //    * connected = ("Connect" | "Disconnect") - mqtt connect status
@@ -21,7 +21,7 @@ const mqttStatus = props => {
     iconColor = '#c71a1a';
   }
   return (
-    <div style={{ display: 'flex', margin: '5px 5px' }}>
+    <div className={styles.mqttStatus}>
       <Icon
         type={icontype}
         theme="twoTone"
@@ -29,7 +29,7 @@ const mqttStatus = props => {
         style={{ marginTop: 'auto', marginBottom: 'auto' }}
       />
       <span style={{ marginLeft: '5px' }}>{'Mqtt is ' + connected}</span>
-      <div className="aligment-right">
+      <div className={styles.alignRight}>
         <Button
           type="primary"
           size="small"

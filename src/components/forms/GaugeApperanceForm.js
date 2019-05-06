@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, InputNumber, Radio, Slider, Input, Button } from 'antd';
-
+import * as _ from 'lodash';
 const mapProp2Field = value => {
   return Form.createFormField({ value: value });
 };
@@ -23,6 +23,7 @@ const gaugeForm = props => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
+        props.onFieldChanged(values);
         console.log('Received values of form: ', values);
       }
     });
@@ -41,39 +42,42 @@ const gaugeForm = props => {
             <Radio.Button value="inline">Inline</Radio.Button>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="width" {...formItemLayout}>
-          {getFieldDecorator('width', {})(<InputNumber min={100} max={500} />)}
-        </Form.Item>
+
         <Form.Item label="height" {...formItemLayout}>
           {getFieldDecorator('height', {})(<InputNumber min={100} max={500} />)}
         </Form.Item>
+
         <Form.Item label="min" {...formItemLayout}>
-          {getFieldDecorator('minValue', requireRules)(<InputNumber />)}
+          {getFieldDecorator('scale.gaugeValue.min', requireRules)(
+            <InputNumber />
+          )}
         </Form.Item>
         <Form.Item label="max" {...formItemLayout}>
-          {getFieldDecorator('maxValue', requireRules)(<InputNumber />)}
+          {getFieldDecorator('scale.gaugeValue.max', requireRules)(
+            <InputNumber />
+          )}
         </Form.Item>
-        <Form.Item label="Start Color" {...formItemLayout}>
-          {getFieldDecorator('startColor', requireRules)(
+
+        <Form.Item label="value :" {...formItemLayout}>
+          {getFieldDecorator('data[0].value', {})(
+            <Slider
+              min={gaugeSettings.scale.gaugeValue.min}
+              max={gaugeSettings.scale.gaugeValue.max}
+            />
+          )}
+        </Form.Item>
+
+        <Form.Item label="Color" {...formItemLayout}>
+          {getFieldDecorator('apperarance.color', requireRules)(
             <input type="color" />
           )}
         </Form.Item>
-        <Form.Item label="End Color" {...formItemLayout}>
-          {getFieldDecorator('endColor', requireRules)(<input type="color" />)}
-        </Form.Item>
-        <Form.Item label="Neddle moving duration(ms):" {...formItemLayout}>
-          {getFieldDecorator('needleTransitionDuration', {})(
-            <InputNumber min={100} max={5000} />
+        <Form.Item label="Background Color" {...formItemLayout}>
+          {getFieldDecorator('apperarance.backgroundColor', requireRules)(
+            <input type="color" />
           )}
         </Form.Item>
-        <Form.Item label="Ring width:" {...formItemLayout}>
-          {getFieldDecorator('ringWidth', {})(
-            <Slider min={10} max={gaugeSettings.height} />
-          )}
-        </Form.Item>
-        <Form.Item label="Segments :" {...formItemLayout}>
-          {getFieldDecorator('segments', {})(<Slider min={1} max={16} />)}
-        </Form.Item>
+
         <Form.Item label="Text " {...formItemLayout}>
           {getFieldDecorator('currentValueText', {})(<Input />)}
         </Form.Item>
@@ -87,19 +91,35 @@ const gaugeForm = props => {
   );
 };
 
+
 export default Form.create({
   name: 'gauge-ppreance-form',
   onFieldsChange(props, changedFields) {
-    props.onFieldChanged(changedFields);
+    //props.onFieldChanged(changedFields);
   },
   mapPropsToFields(props) {
-    const retObj = {};
-    Object.keys(props.gaugeSettings).map(
-      key => (retObj[key] = mapProp2Field(props.gaugeSettings[key]))
+    let g = {};
+    _.forIn(
+      props.gaugeSettings.scale.gaugeValue,
+      (v, k) => (g[k] = mapProp2Field(v))
     );
-    return retObj;
+    let a = {};
+    _.forIn(
+      props.gaugeSettings.apperarance,
+      (v, k) => (a[k] = mapProp2Field(v))
+    );
+    let rr = {
+      height: mapProp2Field(props.gaugeSettings.height),
+      scale: {
+        gaugeValue: g,
+      },
+      data: [{ value: mapProp2Field(props.gaugeSettings.data[0].value) }],
+      apperarance: a,
+    };
+
+    return rr;
   },
-  onValuesChange(_, changedValues, allValues) {
-    //console.log(changedValues, allValues);
+  onValuesChange(props, changedValues, allValues) {
+    //props.onFieldChanged(allValues);
   },
 })(gaugeForm);

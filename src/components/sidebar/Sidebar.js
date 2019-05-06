@@ -24,7 +24,7 @@ const createSubMenu = submenu => (
         ) : (
           React.createElement(submenu.icon)
         )}
-        {submenu.name}
+        <span>{submenu.name}</span>
       </span>
     }
   >
