@@ -7,7 +7,7 @@ import WSocket from '~/api/wsocket';
 import styles from './GaugeCard.module.less';
 
 const gaugeCard = memo(props => {
-  const { title, gaugeSettings } = props;
+  const { title, gaugeSettings, topic } = props;
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [gaugeValue, setGaugeValue] = useState(0);
@@ -16,21 +16,17 @@ const gaugeCard = memo(props => {
   const handleMessage = message => {
     let payload = JSON.parse(message.payload);
     console.log(payload);
-    setGaugeValue(payload);
+    setGaugeValue(payload / 1000);
   };
 
   useEffect(() => {
     ws = new WSocket();
-    console.log('Gauge useeffet');
     ws.on('connect', () => {
-      console.log('GaugeCard connect websocket!');
-      ws.emit({ action: 'change_topic', payload: 'remoteIO/3' });
+      //subscrib topic
+      ws.emit({ action: 'change_topic', payload: topic });
     });
     ws.on('disconnect', () => {
       console.log('GaugeCard disconnect websocket!');
-    });
-    ws.on('remoteIO/1', data => {
-      console.log('GaugaCard receive: ', data);
     });
 
     ws.on('message', handleMessage);
@@ -77,6 +73,7 @@ const gaugeCard = memo(props => {
           <div className={styles.gauge}>
             <Gauge {...gaugeSettings} value={gaugeValue} />
           </div>
+          <span>{gaugeValue}</span>
         </Col>
       </Row>
     </div>

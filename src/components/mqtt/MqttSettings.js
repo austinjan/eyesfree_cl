@@ -6,7 +6,7 @@ import MqttSubscribeForm from 'Components/forms/MqttSubscribeForm';
 import MqttStatus from './MqttStatus';
 import styles from './mqtt.module.less';
 import * as _ from 'lodash';
-
+import { fetchMqttSettings, fetchMqttStatus } from '~/api/mqttAPIs';
 // react component mqttSettings
 const mqttSettings = props => {
   const [mqttStatus, setMqttStatus] = useState('loading');
@@ -23,58 +23,35 @@ const mqttSettings = props => {
   });
   const [subscribes, setSubscribes] = useState([]);
 
-  useEffect(() => {
-    fetchMqttStatus();
-    fetchMqttSettings();
-  }, []);
-  // Get backend server's mqtt settings (server is subscribe of mqtt role)
-  async function fetchMqttSettings() {
-    try {
-      setLoading(true);
-      const response = await fetch(`/apis/v1/mqttsettings`);
-      setLoading(false);
-      if (!response.ok) {
-        setFetchError('Server error: ' + response.statusText);
-        return;
-      }
-      const data = await response.json();
-      if (data) {
-        let dataBroker = {};
-        let dataSubcribe = [];
-        if (Array.isArray(data)) {
-          dataBroker = data[0] || {};
-          dataSubcribe = data[0].subscribes || [];
-        } else {
-          dataBroker = data || {};
-          dataSubcribe = data.subscribes || [];
+  const updateData = () => {
+    fetchMqttStatus(setLoading)
+      .then(connected => {
+        connected ? setMqttStatus('Connect') : setMqttStatus('Disconnect');
+        setFetchError('');
+      })
+      .catch(e => setFetchError(e.message));
+    fetchMqttSettings(setLoading)
+      .then(data => {
+        if (data) {
+          let dataBroker = {};
+          let dataSubcribe = [];
+          if (Array.isArray(data)) {
+            dataBroker = data[0] || {};
+            dataSubcribe = data[0].subscribes || [];
+          } else {
+            dataBroker = data || {};
+            dataSubcribe = data.subscribes || [];
+          }
+          setMqttBrokerSettings(dataBroker);
+          setSubscribes(dataSubcribe);
+          setFetchError('');
         }
-        console.log('fetchMqttSettings ', dataSubcribe);
-        setMqttBrokerSettings(dataBroker);
-        setSubscribes(dataSubcribe);
-      }
-      setFetchError('');
-    } catch (err) {
-      setFetchError(err.message);
-    }
-  }
-
-  async function fetchMqttStatus() {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/mqtt/status`);
-      setLoading(false);
-      if (!response.ok) {
-        setFetchError('Server error: ' + response.statusText);
-        return;
-      }
-      const data = await response.json();
-      const { connected } = data;
-      setMqttStatus(connected ? 'Connect' : 'Disconnect');
-    } catch (e) {
-      setFetchError(e.message);
-    }
-    setFetchError('');
-  }
+      })
+      .catch(e => setFetchError(e.message));
+  };
+  useEffect(() => {
+    updateData();
+  }, []);
 
   async function fetchMqttReconnect() {
     try {
@@ -115,8 +92,7 @@ const mqttSettings = props => {
   };
 
   const handleRefresh = e => {
-    fetchMqttStatus();
-    fetchMqttSettings();
+    updateData();
   };
 
   const alertClose = e => {

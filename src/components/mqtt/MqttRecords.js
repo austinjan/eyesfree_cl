@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Alert, Spin, Button, Input } from 'antd';
 import styles from './mqtt.module.less';
+import { fetchMqttDatas, fetchMqttTopics } from '~/api/mqttAPIs';
 
 // Component MqttRecords
 const mqttRecords = props => {
@@ -9,47 +10,34 @@ const mqttRecords = props => {
   const [mqttDatas, setMqttDatas] = useState([]);
   const [mqttTopics, setMqttTopics] = useState([]);
   const [searchText, setSearch] = useState('');
+
   useEffect(() => {
-    fetchMqttDatas();
-    fetchMqttTopics();
+    fetchMqttDatas(setLoading)
+      .then(v => {
+        setMqttDatas(v);
+        setFetchError('');
+      })
+      .catch(e => setFetchError(e.message));
+    fetchMqttTopics(setLoading)
+      .then(v => {
+        setMqttTopics(v);
+        setFetchError('');
+      })
+      .catch(e => setFetchError(e.message));
     // clean up
     return () => {};
   }, []);
-  // Fetch APIs
-  // Get data
-  async function fetchMqttDatas() {
-    try {
-      setLoading(true);
-      const response = await fetch(`/apis/v1/mqtt`);
-      setLoading(false);
-      if (!response.ok) {
-        setFetchError('Server error: ' + response.statusText);
-        return;
-      }
-      const data = await response.json();
-      setMqttDatas(data);
-    } catch (e) {
-      setFetchError(e.message);
-    }
-    setFetchError('');
-  }
 
-  async function fetchMqttTopics() {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/mqtt/topics`);
-      setLoading(false);
-      if (!response.ok) {
-        setFetchError('Server error: ' + response.statusText);
-        return;
-      }
-      const data = await response.json();
-      setMqttTopics(data);
-    } catch (e) {
-      setFetchError(e.message);
-    }
-    setFetchError('');
-  }
+  // re fetch datas
+  const handleRefresh = e => {
+    e.preventDefault();
+    fetchMqttDatas(setLoading)
+      .then(v => {
+        setMqttDatas(v);
+        setFetchError('');
+      })
+      .catch(e => setFetchError(e.message));
+  };
 
   const alertClose = e => {
     setFetchError('');
@@ -88,7 +76,12 @@ const mqttRecords = props => {
       <div className={styles.mqttStatus}>
         <span style={{ marginLeft: '5px' }}>mqtt records</span>
         <div className={styles.alignRight}>
-          <Button type="primary" size="small" loading={loading}>
+          <Button
+            type="primary"
+            size="small"
+            loading={loading}
+            onClick={handleRefresh}
+          >
             Refresh
           </Button>
         </div>

@@ -35,28 +35,13 @@ const validateProps = props => {
   const min = retProps.scale.gaugeValue.min;
   const max = retProps.scale.gaugeValue.max;
 
+  retProps.data[0].value = value;
+  retProps.data[0].gaugeValue = value;
   if (value <= min) {
-    retProps.data[0].value = min;
+    retProps.data[0].gaugeValue = min;
   } else if (value >= max) {
-    retProps.data[0].value = max;
+    retProps.data[0].gaugeValue = max;
   }
-
-  //retProps.data[0].value = value;
-  // check input value range
-  // if (scale && data) {
-  //   console.log('hihi ', scale, data);
-  //   retProps.data[0].gaugeValue =
-  //     data[0].value < scale.gaugeValue.min
-  //       ? scale.gaugeValue.min
-  //       : data[0].value;
-  //   console.log('retProps.data[0].gaugeValue 1 ', retProps.data[0].gaugeValue);
-  //   retProps.data[0].gaugeValue =
-  //     data[0].value > scale.gaugeValue.max
-  //       ? scale.gaugeValue.max
-  //       : data[0].value;
-  //   console.log('retProps.data[0].gaugeValue 2 ', retProps.data[0].gaugeValue);
-  // }
-  // console.log('retProps', retProps);
 
   return retProps;
 };
