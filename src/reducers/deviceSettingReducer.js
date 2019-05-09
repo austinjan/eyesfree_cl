@@ -4,16 +4,16 @@ import {
   SET_DEVICES,
 } from '../actions/deviceActions';
 
-const DataSize = {
-  bit: 1,
-  byte: 8,
-  word: 16,
-  dword: 32,
-};
+// const DataSize = {
+//   bit: 1,
+//   byte: 8,
+//   word: 16,
+//   dword: 32,
+// };
 
-const DataFormat = {
-  bit: 'bit',
-};
+// const DataFormat = {
+//   bit: 'bit',
+// };
 
 const devicesReducer = (preState = {}, action) => {
   switch (action.type) {

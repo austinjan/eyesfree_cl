@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Input, Radio, Select, Checkbox, DatePicker } from 'antd';
 
 const RadioGroup = Radio.Group;
-const { Option } = Select;
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
@@ -16,19 +15,6 @@ const formItemLayout = {
   wrapperCol: {
     xs: { span: 24 },
     sm: { span: 14 },
-  },
-};
-
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 14,
-      offset: 6,
-    },
   },
 };
 

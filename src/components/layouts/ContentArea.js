@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   makeRootRoutes,
@@ -8,8 +8,6 @@ import {
 } from 'Routers';
 
 const contentArea = () => {
-  const [loading, setLoading] = useState(false);
-  const [fetchError, setFetchError] = useState('');
   return (
     <div>
       {makeRootRoutes}

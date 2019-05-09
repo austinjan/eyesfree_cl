@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { Card, Row, Col } from 'antd';
 import GaugeApperanceFrom from '../forms/GaugeApperanceForm';
 import { GaugeCard } from 'Components/dashboard';
-import * as lo from 'lodash';
 import './dashboard.css';
 import 'ant-design-pro/dist/ant-design-pro.css';
 

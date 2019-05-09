@@ -1,7 +1,6 @@
 import React from 'react';
 
-const Test = props => {
-  const { a, ...rest } = props;
+const Test = () => {
   return (
     <div>
       <h1>TEST</h1>

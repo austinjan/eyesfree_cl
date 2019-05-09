@@ -21,7 +21,7 @@ const userReducer = (preState = [], action) => {
         copyUsers[index] = newItem;
         return copyUsers;
       }
-
+      break;
     default:
       return preState;
   }

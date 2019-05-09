@@ -1,6 +1,5 @@
 import React, { memo, useState, useEffect } from 'react';
 import Gauge from './Gauge';
-import * as _ from 'lodash';
 import { Row, Col, Icon, Button } from 'antd';
 import WSocket from '~/api/wsocket';
 

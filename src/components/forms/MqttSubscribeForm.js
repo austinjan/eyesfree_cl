@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button, Icon, InputNumber, Modal, Table } from 'antd';
-import * as _ from 'lodash';
 import './normalFormStyle.css';
 
 const uniqueKey = () => {

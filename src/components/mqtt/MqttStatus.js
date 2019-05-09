@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import styles from './mqtt.module.less';

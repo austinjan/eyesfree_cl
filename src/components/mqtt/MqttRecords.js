@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Alert, Spin, Button, Input } from 'antd';
+import { Table, Alert, Spin, Button } from 'antd';
 import styles from './mqtt.module.less';
 import { fetchMqttDatas, fetchMqttTopics } from '~/api/mqttAPIs';
 
@@ -9,7 +9,6 @@ const mqttRecords = props => {
   const [fetchError, setFetchError] = useState('');
   const [mqttDatas, setMqttDatas] = useState([]);
   const [mqttTopics, setMqttTopics] = useState([]);
-  const [searchText, setSearch] = useState('');
 
   useEffect(() => {
     fetchMqttDatas(setLoading)

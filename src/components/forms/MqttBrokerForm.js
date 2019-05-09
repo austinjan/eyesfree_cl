@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Form, Input, InputNumber } from 'antd';
 import './normalFormStyle.css';
@@ -65,8 +65,8 @@ export default Form.create({
     const retObj = {};
     const { formSettings } = props;
     if (formSettings) {
-      Object.keys(formSettings).map(key => {
-        if (key != 'subscribs') retObj[key] = mapProp2Field(formSettings[key]);
+      Object.keys(formSettings).forEach(key => {
+        if (key !== 'subscribs') retObj[key] = mapProp2Field(formSettings[key]);
       });
     }
 

@@ -4,16 +4,16 @@ import { Form, Radio, Button } from 'antd';
 import { AInput, ARadioGroup, ARangePicker } from './ReduxFormComponents';
 const FormItem = Form.Item;
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
+// const formItemLayout = {
+//   labelCol: {
+//     xs: { span: 24 },
+//     sm: { span: 6 },
+//   },
+//   wrapperCol: {
+//     xs: { span: 24 },
+//     sm: { span: 14 },
+//   },
+// };
 
 const tailFormItemLayout = {
   wrapperCol: {

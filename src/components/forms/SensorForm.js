@@ -52,7 +52,7 @@ const option = {
 const sensorForm = Form.create(option)(props => {
   const { getFieldDecorator } = props.form;
   const validIPAddress = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-  const validHostname = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]* [a-zA-Z0-9])\.)* ([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]* [A-Za-z0-9])$/;
+  const validHostname = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9]* [a-zA-Z0-9])\.)* ([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9]* [A-Za-z0-9])$/;
   return (
     <div>
       <Form layout="vertical">
@@ -91,13 +91,13 @@ const sensorForm = Form.create(option)(props => {
   );
 });
 
-const validate = values => {
-  const errors = {};
-  if (!values.firstName) {
-    errors.firstName = 'Required';
-  }
+// const validate = values => {
+//   const errors = {};
+//   if (!values.firstName) {
+//     errors.firstName = 'Required';
+//   }
 
-  return errors;
-};
+//   return errors;
+// };
 
 export default sensorForm;

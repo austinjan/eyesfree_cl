@@ -13,7 +13,6 @@ import {
   FETCH_UPDATE_USER,
   FETCH_ADD_USER,
   FETCH_REMOVE_USERS,
-  removeUsers,
   setUsers,
   updateUser,
   fetchFail,

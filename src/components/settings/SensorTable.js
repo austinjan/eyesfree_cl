@@ -1,3 +1,4 @@
+/* eslint-disable no-script-url */
 import React from 'react';
 import PropTypes from 'prop-types';
 import SensorForm from '../forms/SensorForm';
@@ -123,6 +124,7 @@ class SensorTable extends React.Component {
       }),
       render: (text, record) => {
         return (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <a href="javascript:;" onClick={() => this.setEditing(record.key)}>
             編輯
           </a>

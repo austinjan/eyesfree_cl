@@ -1,9 +1,8 @@
 import React, { memo, useState, useEffect } from 'react';
-import * as _ from 'lodash';
 import Cookies from 'universal-cookie';
 import WSocket from '~/api/wsocket';
 import { TimelineChart, ChartCard, Field } from 'ant-design-pro/lib/Charts';
-import { Icon, Popover, Button, Input, Form } from 'antd';
+import { Icon, Popover, Button, Input } from 'antd';
 
 const cookies = new Cookies();
 

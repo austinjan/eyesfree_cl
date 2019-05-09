@@ -6,17 +6,17 @@ import appStateReducer from './appStateReducer';
 import errorReducer from './errorReducer';
 import userReducer from './userSettingsReducer';
 
-const initialState = {
-  // init state object
-  user: {
-    account: null,
-    password: null,
-    authenticated: false,
-  },
-  appSettings: {
-    tableEditing: false,
-  },
-};
+// const initialState = {
+//   // init state object
+//   user: {
+//     account: null,
+//     password: null,
+//     authenticated: false,
+//   },
+//   appSettings: {
+//     tableEditing: false,
+//   },
+// };
 
 export const rootReducer = combineReducers({
   // state object: reducer function
