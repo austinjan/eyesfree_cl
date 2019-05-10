@@ -42,6 +42,7 @@ const TrendCard = memo(props => {
   useEffect(() => {
     const cookieMqttDatas = cookies.get(topic);
     if (cookieMqttDatas) {
+      console.log('TrendCard cookie: ', cookieMqttDatas);
       setMqttDatas(cookieMqttDatas);
     }
     ws = new WSocket();

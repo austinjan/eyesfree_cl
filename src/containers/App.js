@@ -4,9 +4,10 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { Layout } from 'antd';
 import { rootReducer } from '../reducers';
-import Sidebar from '../components/sidebar/Sidebar';
-import ContentArea from '../components/layouts/ContentArea';
-import rootSagas from '../sagas';
+import Sidebar from '~/components/sidebar/Sidebar';
+import ContentArea from '~/components/layouts/ContentArea';
+import Navbar from '~/components/layouts/Navbar';
+import rootSagas from '~/sagas';
 import createSagaMiddleware from 'redux-saga';
 import { initDevices, fetchAllUser } from '../actions';
 
@@ -14,7 +15,7 @@ import './App.css';
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
@@ -42,10 +43,11 @@ class App extends Component {
       <Provider store={store}>
         <Router className="App">
           <Layout>
-            <Header>Header</Header>
+            <Header>
+              <Navbar />
+            </Header>
             <Layout>
               <Sider
-                className="side"
                 collapsible
                 onCollapse={this.onCollapse}
                 collapsed={collapsed}
@@ -56,7 +58,6 @@ class App extends Component {
                 <ContentArea />
               </Content>
             </Layout>
-            <Footer>Footer</Footer>
           </Layout>
         </Router>
       </Provider>

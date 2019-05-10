@@ -14,7 +14,6 @@ const gaugeCard = memo(props => {
 
   const handleMessage = message => {
     let payload = JSON.parse(message.payload);
-    console.log(payload);
     setGaugeValue(payload / 1000);
   };
 
